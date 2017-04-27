@@ -1,0 +1,30 @@
+{
+  "name": "lab-steven",
+  "version": "0.1.0",
+  "description": "Lab 08 - a restful, single resource api",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "promise",
+    "debug",
+    "api"
+  ],
+  "author": "CF Steven Johnson",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
+}
