@@ -23,5 +23,16 @@
   "bugs": {
     "url": "https://github.com/brisourceful/lab-08-single-resource-api/issues"
   },
-  "homepage": "https://github.com/brisourceful/lab-08-single-resource-api#readme"
+  "homepage": "https://github.com/brisourceful/lab-08-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.4",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
 }
