@@ -52,22 +52,23 @@ exports.fetchDelete = function(schemaName, id){
   });
 };
 
-exports.fetchPut = function(schemaName, id, note) {
+exports.fetchPut = function(schemaName, id, auto) {
   debug('#fetchPut');
 
   return new Promise((resolve, reject) => {
-    if(!schemaName) return Promise.reject(new Error('Schema required'));
-    if(!id) return Promise.reject(new Error('ID required'));
-    if(!note) return reject(new Error('Note required'));
+    if(!schemaName) return reject(new Error('Schema required'));
 
-    let noteFetched = exports.fetchCar('auto', id)
-    .then(noteFetched => {
-      if(note.name) noteFetched.name = note.name;
-      if(note.car) noteFetched.car = note.car;
+    if(!id) return reject(new Error('ID required'));
 
-    });
-    if(!noteFetched) return reject(new Error('Does not exist'));
+    let schema = storage[schemaName];
+    if(!schema) return reject(new Error('Schema does not exist'));
 
-    resolve(noteFetched);
+    let note = schema[id];
+    if(!note) return reject(new Error('note does not exist'));
+
+    if(auto.name) note.name = auto.name;
+    if(auto.car) note.car = auto.car;
+
+    resolve(note);
   });
 };

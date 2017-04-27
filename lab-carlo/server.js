@@ -39,10 +39,12 @@ router.post('/api/auto', function(req, res) {
   console.log(req.body);
   try {
     let auto = new Automobile(req.body.name, req.body.car);
-    storage.createCar('auto', auto);
-    res.writeHead(201, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(auto));
-    res.end();
+    storage.createCar('auto', auto)
+    .then(auto => {
+      res.writeHead(201, {'Content-Type': 'application/json'});
+      res.write(JSON.stringify(auto));
+      res.end();
+    });
   } catch(e) {
     console.error(e);
     res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -80,11 +82,12 @@ router.put('/api/auto', function(req, res) {
   console.log(req.body);
   if(req.body.id){
     try {
-      let auto = new Automobile(req.body.name, req.body.car);
-      storage.fetchPut('auto',req.body.id, auto);
-      res.writeHead(201, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(auto));
-      res.end();
+      storage.fetchPut('auto',req.body.id, req.body)
+      .then(auto => {
+        res.writeHead(201, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(auto));
+        res.end();
+      });
     } catch(e) {
       console.error(e);
       res.writeHead(400, {'Content-Type': 'text/plain'});
