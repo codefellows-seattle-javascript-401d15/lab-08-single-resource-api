@@ -9,7 +9,9 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "debug": "DEBUG=http* nodemon server.js"
+    
 
   },
   "keywords": [
