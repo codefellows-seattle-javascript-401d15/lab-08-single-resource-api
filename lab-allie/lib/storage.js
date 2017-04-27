@@ -33,6 +33,17 @@ exports.fetchAlbum = function(schemaName, id) {
   });
 };
 
+exports.updateAlbum = function(schemaName, album) {
+  debug('#storage updateAlbum');
+  if(!schemaName) return Promise.reject(new Error('Schema required'));
+  if(!album) return Promise.reject(new Error('Album required'));
+  
+  storage[schemaName] = {};
+  storage[schemaName][album.id] = album;
+  
+  return Promise.resolve(album);
+};
+
 exports.fetchAll = function(schemaName) {
   debug('#storage fetchAll');
   
@@ -44,4 +55,13 @@ exports.fetchAll = function(schemaName) {
     
     resolve(ids);
   });
+};
+
+exports.removeAlbum = function(schemaName, id) {
+  debug('#storage removeAlbum');
+  if(!schemaName) return Promise.reject(new Error('Schema required'));
+  if(!id) return Promise.reject(new Error('ID required'));
+  
+  storage[schemaName] = {};
+  return Promise.resolve(id);
 };
