@@ -26,7 +26,7 @@ exports.updateItem = function(schema, id) {
     if(!id) return reject(new Error('item required'));
     if(!storage[schema]) return reject(new Error('no item to update, create it first!'));
 
-    let item = schemaName[id];
+    let item = schema[id];
 
     storage[schema][item.id] = item;
 

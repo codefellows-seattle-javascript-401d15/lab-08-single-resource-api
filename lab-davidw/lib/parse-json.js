@@ -22,7 +22,7 @@ module.exports = function(req) {
 
       req.on('error', e => {
         console.error(e);
-        reject(err);
+        reject(e);
       });
       return;
     }

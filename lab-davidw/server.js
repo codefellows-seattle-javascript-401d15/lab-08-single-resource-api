@@ -39,10 +39,10 @@ router.put('/api/lure', function(req, res) {
 
   if(req.url.query.id) {
     storage.fetchItem('lure', req.url.query.id)
-    .then(hawk => {
-      if(req.body.name) lure.name = req.body.name;
-      if(req.body.name) lure.type = req.body.type;
-      if(req.body.targets) lure.targets = req.body.targets;
+    .then(item => {
+      if(req.body.name) item.name = req.body.name;
+      if(req.body.name) item.type = req.body.type;
+      if(req.body.targets) item.targets = req.body.targets;
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('lure updated!');
       res.end();
