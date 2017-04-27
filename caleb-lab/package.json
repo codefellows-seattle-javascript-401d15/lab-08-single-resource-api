@@ -1,0 +1,25 @@
+{
+  "name": "8-first-promise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "debug": "^2.6.4"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1",
+    "chai": "^3.5.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
+  }
+}
