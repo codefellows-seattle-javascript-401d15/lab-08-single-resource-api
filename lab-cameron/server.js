@@ -49,14 +49,30 @@ router.post('/api/pokemon', function(req, res) {
   }
 });
 
-router.put('/api/pokemon/:id', function(req, res) {
-  debug('PUT /api/pokemon/:id');
+router.put('/api/pokemon', function(req, res) {
+  debug('PUT /api/pokemon');
+  storage.updatePokemon('pokemon', req.body.id, req.body)
+  .then(pokemon => {
+    res.writeHead(202, {'Content-Type': 'text/plain'});
+    res.write(JSON.stringify(pokemon));
+    res.end();
+  })
+  .catch(err => {
+    console.error(err);
+    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.write('bad request');
+    res.end();
+  });
+  return;
+});
+
+router.delete('/api/pokemon', function(req, res) {
+  debug('DELETE /api/pokemon');
   if (req.url.query.id) {
-    storage.fetchPokemon('pokemon', req.url.query.id)
-    .then(pokemon => {
-      Object.assign(pokemon, req.body);
-      res.writeHead(202, {'Content-Type': 'text/plain'});
-      res.write(JSON.stringify(pokemon));
+    storage.deletePokemon('pokemon', req.url.query.id)
+    .then(() => {
+      res.writeHead(204, {'Content-Type': 'application/json'});
+      res.write('pokemon successfully deleted');
       res.end();
     })
     .catch(err => {
@@ -67,6 +83,9 @@ router.put('/api/pokemon/:id', function(req, res) {
     });
     return;
   }
+  res.writeHead(400, {'Content-Type': 'text/plain'});
+  res.write('bad request');
+  res.end();
 });
 
 server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

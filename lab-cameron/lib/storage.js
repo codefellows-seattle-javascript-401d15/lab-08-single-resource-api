@@ -31,3 +31,40 @@ exports.fetchPokemon = function(schema, id) {
     resolve(pokemon);
   });
 };
+
+exports.updatePokemon = function(schema, id, newPoke) {
+  return new Promise((resolve, reject) => {
+    debug('#updatePokemon');
+    if (!schema) return reject(new Error('Schema required'));
+    if (!id) return reject(new Error('Id required.'));
+
+    let schemaName = storage[schema];
+    if (!schemaName) return reject(new Error('Schema not found'));
+
+    let pokemon = schemaName[id];
+    if (!pokemon) return reject(new Error('Pokemon not found'));
+
+    if (newPoke.name) pokemon.name = newPoke.name;
+    if (newPoke.type) pokemon.type = newPoke.type;
+
+    resolve(pokemon);
+  });
+};
+
+exports.deletePokemon = function(schema, id) {
+  return new Promise((resolve, reject) => {
+    debug('#deletePokemon');
+    if (!schema) return reject(new Error('Schema required'));
+    if (!id) return reject(new Error('Id required.'));
+
+    let schemaName = storage[schema];
+    if (!schemaName) return reject(new Error('Schema not found'));
+
+    let pokemon = schemaName[id];
+    if (!pokemon) return reject(new Error('Pokemon not found'));
+
+    delete storage[schema][id];
+
+    resolve();
+  });
+};
