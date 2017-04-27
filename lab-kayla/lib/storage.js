@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; //schema = a dragon object
 
 const debug = require('debug')('http:storage');
 const storage = {};
@@ -24,7 +24,7 @@ exports.fetchItem = (schema, id) => {
     if(!schema) return reject(new Error('schema required'));
     if(!id) return reject(new Error('id required'));
 
-    let schemaName = storage[schema];
+    let schemaName = storage[schema]; // = storage.dragon
     if(!schemaName) return reject(new Error('schema not found'));
 
     let item = schemaName[id];

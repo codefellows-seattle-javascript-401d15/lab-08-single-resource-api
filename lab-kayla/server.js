@@ -15,34 +15,36 @@ router.get('/api/dragon', function(req, res) {
   if(req.url.query.id) {
     storage.fetchItem('dragon', req.url.query.id)
     .then(dragon => {
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(dragon));
-      res.end();
+      res.writeHead(200, {'Content-Type': 'application/json'})
+      res.write(JSON.stringify(dragon))
+      res.end()
     })
     .catch(err => {
-      console.error(err);
-      res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.write('not found');
-      res.end();
+      console.error(err)
+      res.writeHead(404, {'Content-Type': 'text/plain'})
+      res.write('not found')
+      res.end()
     });
-    return;
+    return
   }
-  res.writeHead(400, {'Content-Type': 'text/plain'});
-  res.write('bad request');
-  res.end();
-});
+  res.writeHead(400, {'Content-Type': 'text/plain'})
+  res.write('bad request')
+  res.end()
+})
 
 router.post('/api/dragon', function(req, res) {
-  debug('POST /api/dragon');
-  console.log(req.body);
+  debug('POST /api/dragon')
+  console.log(req.body)
   try {
-    let dragon = new KillerDragon(req.body.name, req.body.type, req.body.hazard);
-    storage.createItem('dragon', dragon);
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write('bad request');
-    res.end();
-  } .catch(e) {
-    console.error(e);
+    let dragon = new KillerDragon(req.body.name, req.body.type, req.body.hazard)
+    storage.createItem('dragon', dragon)
+    .then(newDragon => {
+    res.writeHead(200, {'Content-Type': 'application/json'})
+    res.write('bad request')
+    res.end()
+    })
+  } catch(e) {
+    console.error(e)
     res.writeHead(400, {'Content-Type': 'text/plain'});
     res.write('bad request');
     res.end();
@@ -71,20 +73,20 @@ router.post('/api/dragon', function(req, res) {
   });
 
     router.delete('/api/dragon', function(req, res) {
-      debug('DELETE /api/dragon');
+      debug('DELETE /api/dragon')
       if(req.url.query.id)
-        storage.deleteItem('dragon', req.url.query.id);
-        .then( => {
-          res.writeHead(200, {'Content-Type': 'application/json'});
-          res.end();
+        storage.deleteItem('dragon', req.url.query.id)
+        .then( () => {
+          res.writeHead(200, {'Content-Type': 'application/json'})
+          res.end()
         })
       } .catch(e) {
-        console.error(e);
-        res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write('item not found');
-        res.end();
+        console.error(e)
+        res.writeHead(400, {'Content-Type': 'text/plain'})
+        res.write('item not found')
+        res.end()
       })
-      return;
+      return
     }
 });
 

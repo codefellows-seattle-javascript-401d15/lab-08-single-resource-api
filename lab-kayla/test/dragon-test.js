@@ -1,7 +1,11 @@
 'use strict'; //test constructor, route methods
 
 const Dragon = require('../model/killer-dragon');
-const chai = require('chai').expect;
+const chai = require('chai');
+const http = require('chai-http');
+const expect = chai.expect;
+
+chai.use(http)
 
 describe('killer-dragon module', function() {
   describe('when creating a new dragon object', function() {
