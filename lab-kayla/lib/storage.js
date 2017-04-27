@@ -46,3 +46,14 @@ exports.fetchAll = (schema) => {
     resolve(ids);
   });
 };
+
+// exports.deleteItem = (schema) => {
+//   debug('#deleteItem')
+//
+//   return new Promise((resolve, reject) => {
+//     if(!schema) return reject(new Error('schema required'));
+//     if(!id) return reject(new Error('id required'));
+//
+//
+//   })
+// }

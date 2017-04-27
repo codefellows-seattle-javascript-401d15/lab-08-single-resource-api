@@ -48,27 +48,27 @@ router.post('/api/dragon', function(req, res) {
     res.end();
   }
 
-  router.put('/api/dragon', function(req, res) {
-    debug('PUT /api/dragon');
-    if(req.url.query.id) {
-      storage.fetchItem('dragon', req.url.query.id)
-      .then(dragon => {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify(dragon));
-        res.end();
-      })
-      .catch(err => {
-        console.error(err);
-        res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.write('not found');
-        res.end();
-      });
-      return;
-    }
-    res.writeHead(400, {'Content-Type': 'text/plain'});
-    res.write('bad request');
-    res.end();
-  });
+  // router.put('/api/dragon', function(req, res) {
+  //   debug('PUT /api/dragon');
+  //   if(req.url.query.id) {
+  //     storage.fetchItem('dragon', req.url.query.id)
+  //     .then(dragon => {
+  //       res.writeHead(200, {'Content-Type': 'application/json'});
+  //       res.write(JSON.stringify(dragon));
+  //       res.end();
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //       res.writeHead(404, {'Content-Type': 'text/plain'});
+  //       res.write('not found');
+  //       res.end();
+  //     });
+  //     return;
+  //   }
+  //   res.writeHead(400, {'Content-Type': 'text/plain'});
+  //   res.write('bad request');
+  //   res.end();
+  // });
 
     router.delete('/api/dragon', function(req, res) {
       debug('DELETE /api/dragon');
