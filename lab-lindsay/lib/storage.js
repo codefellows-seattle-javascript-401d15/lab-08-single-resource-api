@@ -60,8 +60,13 @@ exports.updateItem = function(schema, id) {
     let schemaName = storage[schema];
     if(!schemaName) return reject(new Error('schema not found'));
 
+    let candy = schemaName[id];
+    if(!candy) return reject(new Error('item not found'));
     console.log(storage[schema]);
-    schemaName.name = 'Twix';
+
+    if(newName) candy.name = newName;
+    if(newType) candy.type = newType;
+    if(newTexture) candy.texture = newTexture;
 
     resolve();
   });

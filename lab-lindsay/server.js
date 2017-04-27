@@ -53,21 +53,34 @@ router.post('/api/candy', function(req, res) {
 router.put('/api/candy', function(req, res) {
   debug('PUT /api/candy');
   if(req.url.query.id) {
-    storage.updateItem('candy', req.url.query.id)
+    storage.updateItem('candy', req.url.query.id, req.body.name, req.body.type, req.body.texture)
     .then(candy => {
-      res.writeHead(204, {'Content-Type': 'text/plain'});
-      res.write('not found');
+      res.writeHead(202, {'Content-Type': 'text/plain'});
       res.end();
     });
+    .catch(err => {
+      console.error(error);
+      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.write('bad request');
+      res.end();
+    })
   return;}
-  console.log(req.body);
-})
+});
 
 router.delete('/api/candy', function(req, res) {
   debug('DELETE /api/candy');
-  console.log(req.body);
-  try{
-    storage.removeItem('removeCandy', removeCandy);
-}
+  if(req.url.query.id) {
+    storage.removeItem('candy', req.url.query.id)
+    .then(candy => {
+      res.writeHead(204, {'Content-Type': 'text/plain'});
+      res.end();
+    });
+    .catch(err => {
+      console.error(error);
+      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.write('not found');
+      res.end();
+    })
+});
 
 server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
