@@ -54,7 +54,7 @@ router.delete('/api/food', function(req, res) {
   debug('DELETE /api/food');
   if(req.url.query.id) {
     storage.deleteItem('food', req.url.query.id)
-    .then(food => {
+    .then( () => {
       res.writeHead(204, {'Content-Type': 'application/json'});
       res.end();
     })
