@@ -35,10 +35,12 @@ router.post('/api/consoles', function(req, res) {
   console.log(req.body);
   try {
     let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
-    storage.createItem('consoles', hardware);
-    res.writeHead(201, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(hardware));
-    res.end();
+    storage.createItem('consoles', hardware)
+    .then(newHardware => {
+      res.writeHead(201, {'Content-Type': 'application/json'});
+      res.write(JSON.stringify(newHardware));
+      res.end();
+    });
   } catch(e) {
     console.error(e);
     res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -71,7 +73,7 @@ router.put('/api/console', function(req, res) {
 
   if (req.url.query.id) {
     let newItem = new Hardware(req.body.name, req.body.manufacturer, req.releaseDate);
-    storage.updateItem('console', req.url.query.id, newItem)
+    storage.updateItem('hardware', req.url.query.id, newItem)
     .then(hardware => {
       res.writeHead(202, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(hardware));
