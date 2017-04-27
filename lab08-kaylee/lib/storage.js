@@ -33,3 +33,37 @@ exports.fetchNote = function(schema, id) {
     resolve(note);
   });
 };
+
+exports.updateNote = function(schema, id) {
+  debug('#updateNote');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('schema required'));
+    if(!id) return reject(new Error('id required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    let note = schemaName[id];
+    if(!note) return reject(new Error('note not found'));
+
+    resolve(note);
+  });
+};
+
+// exports.deleteNote = function(schema, id) {
+//   debug('#deleteNote');
+//
+//   return new Promise((resolve, reject) => {
+//     if(!schema) return reject(new Error('schema required'));
+//     if(!id) return reject(new Error('id required'));
+//
+//     let schemaName = storage[schema];
+//     if(!schemaName) return reject(new Error('schema not found'));
+//
+//     let note = schemaName[id];
+//     if(!note) return reject(new Error('note not found'));
+//
+//     resolve(note);
+//   });
+// };

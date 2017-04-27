@@ -27,7 +27,7 @@ router.get('/api/note', function(req, res) {
     });
     return;
   }
-  
+
   res.writeHead(400, {'Content-Type': 'text/plain'});
   res.write('bad request');
   res.end();
@@ -35,9 +35,9 @@ router.get('/api/note', function(req, res) {
 
 router.post('/api/note', function(req, res) {
   debug('POST /api/note');
-  console.log(req.body);
+  console.log(req.body, 'req.body post');
   try {
-    let note = new Note(req.body.name, req.body.type, req.body.hazard);
+    let note = new Note(req.body.name, req.body.date);
     storage.createNote('note', note);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(note));
@@ -49,5 +49,24 @@ router.post('/api/note', function(req, res) {
     res.end();
   }
 });
+
+router.put('/api/note', function(req, res) {
+  debug('PUT /api/note');
+  console.log(req.body, 'req.body put');
+  try {
+    let note = new Note(req.body.name, req.body.date);
+    storage.updateNote('note', note);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write()
+  }
+});
+//
+// router.delete('/api/note', function(req, res) {
+//   debug('DELETE /api/note');
+//   console.log(req.body, 'req.body delete');
+//   try {
+//
+//   }
+// })
 
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}!`));
