@@ -1,7 +1,7 @@
 'use strict';
 
 const http = require('http');
-const Note = require('./model/note.js');
+const Album = require('./model/albums.js');
 const Router = require('./lib/router');
 const storage = require('./lib/storage');
 const debug = require('debug')('http:server');
@@ -15,13 +15,13 @@ server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
 // add the condition to ran fetchall in the get request.
-router.get('/api/note', (req, res) => {
-  debug('GET /api/note');
+router.get('/api/album', (req, res) => {
+  debug('GET /api/album');
   if(req.url.query.id) {
-    storage.fetchNote('note', req.url.query.id)
-    .then(note => {
+    storage.fetchAlbum('album', req.url.query.id)
+    .then(album => {
       res.writeHead(200, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(note));
+      res.write(JSON.stringify(album));
       res.end();
     })
     .catch(err => {
@@ -37,14 +37,14 @@ router.get('/api/note', (req, res) => {
   res.end();
 });
 
-router.post('/api/toy', function(req, res) {
-  debug('POST /api/toy');
+router.post('/api/album', function(req, res) {
+  debug('POST /api/album');
   console.log(req.body);
   try {
-    let toy = new KidToy(req.body.name, req.body.type, req.body.hazard);
-    storage.createItem('toy', toy);
+    let album = new Album(req.body.name, req.body.type, req.body.hazard);
+    storage.createItem('album', album);
     res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(toy));
+    res.write(JSON.stringify(album));
     res.end();
   } catch(e) {
     console.error(e);

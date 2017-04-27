@@ -5,31 +5,31 @@ const storage = {};
 
 module.exports = exports = {};
 
-exports.createNote = function(schemaName, note) {
-  debug('#storage createNote');
+exports.createAlbum = function(schemaName, album) {
+  debug('#storage createAlbum');
   if(!schemaName) return Promise.reject(new Error('Schema required'));
-  if(!note) return Promise.reject(new Error('Note required'));
+  if(!album) return Promise.reject(new Error('Album required'));
   
   if(!storage[schemaName]) storage[schemaName] = {};
   
-  storage[schemaName][note.id] = note;
+  storage[schemaName][album.id] = album;
   
-  return Promise.resolve(note);
+  return Promise.resolve(album);
 };
 
-exports.fetchNote = function(schemaName, id) {
-  debug('#storage fetchNote');
+exports.fetchAlbum = function(schemaName, id) {
+  debug('#storage fetchAlbum');
   return new Promise((resolve, reject) => {
     if(!schemaName) return reject(new Error('Schema name required'));
-    if(!id) return reject(new Error('Note id required'));
+    if(!id) return reject(new Error('Album id required'));
     
     let schema = storage[schemaName];
     if(!schema) return reject(new Error('Schema does not exist'));
     
-    let note = schema[id];
-    if (!note) return reject(new Error('Note does not exist'));
+    let album = schema[id];
+    if (!album) return reject(new Error('Album does not exist'));
     
-    resolve(note);
+    resolve(album);
   });
 };
 

@@ -1,0 +1,29 @@
+{
+  "name": "lab-allie",
+  "version": "1.0.0",
+  "description": "Vanilla REST API for code 401 lab 8",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "mocha",
+    "chai",
+    "rest",
+    "api",
+    "debug",
+    "routes",
+    "server"
+  ],
+  "author": "Allie Grampa",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0"
+  }
+}
