@@ -1,6 +1,5 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) lab-08-single-resource-api
-======
-
+=====
 
 # To Submit this Assignment
   * fork this repository
@@ -35,26 +34,29 @@
 ## Server Endpoints
 ### `/api/simple-resource-name`
 * `POST` request
- * pass data as stringifed json in the body of a post request to create a resource
+  * pass data as stringifed json in the body of a post request to create a resource
 * `GET` request
- * pass an `?id=<uuid>` in the query string to retrieve a specific resource as json
+  * pass an `?id=<uuid>` in the query string to retrieve a specific resource as json
 * `DELETE` request
- * pass an `?id=<uuid>` in the query string to delete a specific resource
- * should return 204 status with no content in the body
+  * pass an `?id=<uuid>` in the query string to delete a specific resource
+  * should return 204 status with no content in the body
+* `PUT` request
+  * pass data as stringified json in the body of a put request to update a resource
+  * optionally decide whether the id of the resource is passed through the body or via the request url
 
 ## Tests
 * your tests should start your server when they begin and stop your server when they finish
 * write a test to ensure that your api returns a status code of 404 for routes that have not been registered
 * write tests to ensure your `/api/simple-resource-name` endpoint responds as described for each condition below:
- * `GET` - test 404, responds with 'not found' for valid request made with an id that was not found
- * `GET` - test 400, responds with 'bad request' if no id was provided in the request
- * `GET` - test 200, response body like `{<data>}` for a request made with a valid id
- * `POST` - test 400, responds with 'bad request' for if no `body provided` or `invalid body`
- * `POST` - test 200, response body like  `{<data>}` for a post request with a valid body
+  * `GET` - test 404, responds with 'not found' for valid request made with an id that was not found
+  * `GET` - test 200, response body like `{<data>}` for a request made with a valid id
+  * `POST` - test 400, responds with 'bad request' for if no `body provided` or `invalid body`
+  * `POST` - test 200, response body like  `{<data>}` for a post request with a valid body
+  * `PUT` - test 400, responds with 'bad request' for if no `body provided` or `invalid body`
+  * `PUT` - test 204, response body like  `{<data>}` for a put request with a valid  id
+  * `DELETE` - test 404, responds with 'not found' for valid request made with an id that was not found
+  * `DELETE` - test 202, response for a delete request with a valid id
+
 
 ## Bonus
 * **2pts** a `GET` request to `/api/simple-resource-name` with no **?id=** should return an array of all of the ids for that resource
-
-### Alternatives for implementing promises
-* Create a body parser that uses Promises to parse the json in the body of `POST` and `PUT` requests
-* Create a url parser that returns a promise and uses nodes `url` and `querystring` modules parse the request url
