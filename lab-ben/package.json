@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "once": "node server.js",
+    "start": "nodemon server.js",
+    "debug": "DEBUG=http* nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,8 @@
   },
   "keywords": [
     "Videogames",
-    "Console\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Dmocha",
+    "Console",
+    "mocha",
     "chai"
   ],
   "author": "Ben Ayzenberg",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "debug": "^2.6.4",
     "mocha": "^3.3.0",
     "superagent": "^3.5.2"

@@ -3,7 +3,7 @@
 const http = require('http');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
-const Console = require('./model/consoles.js');
+const Hardware = require('./model/consoles.js');
 const debug = require('debug')('http:server');
 const PORT = process.env.PORT || 3000;
 
@@ -29,13 +29,13 @@ router.get('/api/console', function(req, res) {
   }
 });
 
-router.post('/api/console', function(req, res) {
-  debug('POST /api/console');
+router.post('/api/consoles', function(req, res) {
+  debug('POST /api/consoles');
 
   console.log(req.body);
   try {
-    let hardware = new Console(req.body.name, req.body.manufacturer, req.body.releaseDate);
-    storage.createItem('console', hardware);
+    let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
+    storage.createItem('consoles', hardware);
     res.writeHead(201, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(hardware));
     res.end();
@@ -70,7 +70,7 @@ router.put('/api/console', function(req, res) {
   debug('PUT api/console');
 
   if (req.url.query.id) {
-    let newItem = new Console(req.body.name, req.body.manufacturer, req.releaseDate);
+    let newItem = new Hardware(req.body.name, req.body.manufacturer, req.releaseDate);
     storage.updateItem('console', req.url.query.id, newItem)
     .then(hardware => {
       res.writeHead(202, {'Content-Type': 'application/json'});
