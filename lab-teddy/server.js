@@ -8,7 +8,7 @@ const debug = require('debug')('http:server');
 const PORT = process.env.PORT || 8080;
 
 const router = new Router();
-const server = module.exports = http.creatServer(router.route());
+const server = module.exports = http.createServer(router.route());
 
 router.get('/api/car', function(req, res){
   debug('GET /api/car');

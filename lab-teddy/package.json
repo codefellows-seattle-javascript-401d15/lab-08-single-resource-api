@@ -9,7 +9,9 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "debug": "DEBUG=http* nodemon server.js"
+    "debug": "DEBUG=http* nodemon server.js",
+    "lint": "lab-teddy/.eslintrc"
+    
   },
   "repository": {
     "type": "git",
