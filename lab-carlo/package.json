@@ -1,0 +1,24 @@
+{
+  "name": "lab-carlo",
+  "version": "1.0.0",
+  "description": "Class 8 lab",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "debug": "DEBUG=http* nodemon server.js"
+  },
+  "author": "Carlo",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0"
+  }
+}
