@@ -1,0 +1,30 @@
+{
+  "name": "lab-08-single-resource-api",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab-08-single-resource-api =====",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "debug": "DEBUG=http* nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glenrage/lab-08-single-resource-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glenrage/lab-08-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/glenrage/lab-08-single-resource-api#readme",
+  "dependencies": {
+    "debug": "^2.6.4",
+    "http": "0.0.0",
+    "uuid-v4": "^0.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0"
+  }
+}
