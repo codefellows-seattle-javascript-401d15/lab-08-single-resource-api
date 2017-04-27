@@ -52,6 +52,14 @@ router.post('/api/candy', function(req, res) {
 
 router.put('/api/candy', function(req, res) {
   debug('PUT /api/candy');
+  if(req.url.query.id) {
+    storage.updateItem('candy', req.url.query.id)
+    .then(candy => {
+      res.writeHead(204, {'Content-Type': 'text/plain'});
+      res.write('not found');
+      res.end();
+    });
+  return;}
   console.log(req.body);
 })
 
@@ -59,7 +67,6 @@ router.delete('/api/candy', function(req, res) {
   debug('DELETE /api/candy');
   console.log(req.body);
   try{
-    let removeCandy = CandyBar(req.body.name, req.body.type, req.body.texture);
     storage.removeItem('removeCandy', removeCandy);
 }
 

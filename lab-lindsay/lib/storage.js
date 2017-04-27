@@ -47,5 +47,22 @@ exports.removeItem = function(schema, id) {
     console.log(storage[schema]);
     delete(storage[schema]);
 
+    resolve();
+  });
+};
+
+exports.updateItem = function(schema, id) {
+  debug('#updateItem');
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('schema required'));
+    if(!id) return reject(new Error('id required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    console.log(storage[schema]);
+    schemaName.name = 'Twix';
+
+    resolve();
   });
 };
