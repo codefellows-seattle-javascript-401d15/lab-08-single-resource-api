@@ -29,7 +29,7 @@ Router.prototype.put = function(endpoint, callback) {
   this.routes.PUT[endpoint] = callback;
 };
 
-Router.prototype.delete = function(endpoing, callback) {
+Router.prototype.delete = function(endpoint, callback) {
   debug('#DELETE');
   this.routes.DELETE[endpoint] = callback;
 };
@@ -55,7 +55,7 @@ Router.prototype.route = function() {
         return;
       }
 
-      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('route not found');
       res.end();
     })

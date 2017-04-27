@@ -44,7 +44,7 @@ router.post('/api/food', function(req, res) {
     res.end();
   } catch(e) {
     console.error(e);
-    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.writeHead(404, {'Content-Type': 'text/plain'});
     res.write('bad request');
     res.end();
   }
@@ -56,12 +56,11 @@ router.delete('/api/food', function(req, res) {
     storage.deleteItem('food', req.url.query.id)
     .then(food => {
       res.writeHead(204, {'Content-Type': 'application/json'});
-      res.write();
       res.end();
     })
     .catch(err => {
       console.error(err);
-      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('not found');
       res.end();
     });
@@ -84,7 +83,7 @@ router.put('/api/food', function(req, res) {
     })
     .catch(err => {
       console.error(err);
-      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('not found');
       res.end();
     });

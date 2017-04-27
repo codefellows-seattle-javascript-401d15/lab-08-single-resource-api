@@ -27,7 +27,7 @@
  * -Also include two other properties of your choice (like name, creationDate, etc.)
 * -Create a body parser to parse the json in the body of `POST` and `PUT` requests
 * -Create a url parser that uses nodes `url` and `querystring` modules parse the request url
-* Create a Router Constructor that manages requests to `GET`, `POST`, `PUT`, and `DELETE` requests
+* -Create a Router Constructor that manages requests to `GET`, `POST`, `PUT`, and `DELETE` requests
 * Create a route for doing `CREATE`, `READ`, and `DELETE` operations on your _simple resource_
 * -Create a storage module that will store resources by their type and id
 
@@ -45,8 +45,8 @@
   * optionally decide whether the id of the resource is passed through the body or via the request url
 
 ## Tests
-* your tests should start your server when they begin and stop your server when they finish
-* write a test to ensure that your api returns a status code of 404 for routes that have not been registered
+* -your tests should start your server when they begin and stop your server when they finish
+* -write a test to ensure that your api returns a status code of 404 for routes that have not been registered
 * write tests to ensure your `/api/simple-resource-name` endpoint responds as described for each condition below:
   * `GET` - test 404, responds with 'not found' for valid request made with an id that was not found
   * `GET` - test 200, response body like `{<data>}` for a request made with a valid id
