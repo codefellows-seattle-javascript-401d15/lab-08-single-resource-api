@@ -32,3 +32,16 @@ exports.fetchNote = function(schemaName, id) {
     resolve(note);
   });
 };
+
+exports.fetchAll = function(schemaName) {
+  debug('#storage fetchAll');
+  
+  return new Promise((resolve, reject) => {
+    if(!schemaName) return reject(new Error('Schema required'));
+    
+    let ids = Object.keys(storage[schemaName]);
+    if(!ids) return reject(new Error('No items found'));
+    
+    resolve(ids);
+  });
+};

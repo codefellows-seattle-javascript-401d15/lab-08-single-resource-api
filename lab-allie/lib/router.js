@@ -1,7 +1,7 @@
 'use strict';
 
 const debug = require('debug')('http:router');
-const parseQuery = require('./parse-json.js');
+const parseJson = require('./parse-json.js');
 const parseUrl = require('./parse-url.js');
 
 const Router = module.exports = function() {
@@ -16,25 +16,30 @@ const Router = module.exports = function() {
 };
 
 Router.prototype.get = function(endpoint, callback) {
+  debug('#GET');
   this.routes.GET[endpoint] = callback;
 };
 
 Router.prototype.post = function(endpoint, callback) {
+  debug('#POST');
   this.routes.POST[endpoint] = callback;
 };
 
 Router.prototype.put = function(endpoint, callback) {
+  debug('#PUT');
   this.routes.PUT[endpoint] = callback;
 };
 
 Router.prototype.delete = function(endpoint, callback) {
+  debug('#DELETE');
   this.routes.DELETE[endpoint] = callback;
 };
 
-Router.prototype.route = function(req, res) {
+Router.prototype.route = function() {
+  debug('#routes');
   return (req, res) => {
     Promise.all([
-      parseQuery(req),
+      parseJson(req),
       parseUrl(req),
     ])
     .then(() => {
