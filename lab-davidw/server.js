@@ -12,7 +12,7 @@ const server = module.exports = http.createServer(router.route());
 
 router.get('/api/toy', function(req, res) {
   debug('GET /api/toy');
-  if(req.url.query.id){
+  if(req.url.query.id) {
     storage.fetchItem('toy', req.url.query.id)
   .then(toy => {
     res.writeHead(200, {'Content-Type': 'application/json'});
