@@ -5,6 +5,8 @@
   "main": "\u001b[D\u001b[Dserver.js)",
   "scripts": {
     "test": "mocha",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
     "debug": "DEBUG=http* nodemon server.js"
   },
   "keywords": [
