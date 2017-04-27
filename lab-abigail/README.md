@@ -17,27 +17,27 @@
 * include any npm scripts for starting server, linting, testing, etc
 
 # Directions
-* Create these directories to organize your code:
- * lib
- * model
- * test
-* Create a HTTP Server using the http module
-* Create a Object Constructor that creates a _simple resource_ with at least 3 properties
- * An `id` property that is set to a unique **node-uuid** id is required
- * Also include two other properties of your choice (like name, creationDate, etc.)
-* Create a body parser to parse the json in the body of `POST` and `PUT` requests
-* Create a url parser that uses nodes `url` and `querystring` modules parse the request url
+* -Create these directories to organize your code:
+ * -lib
+ * -model
+ * -test
+* -Create a HTTP Server using the http module
+* -Create a Object Constructor that creates a _simple resource_ with at least 3 properties
+ * -An `id` property that is set to a unique **node-uuid** id is required
+ * -Also include two other properties of your choice (like name, creationDate, etc.)
+* -Create a body parser to parse the json in the body of `POST` and `PUT` requests
+* -Create a url parser that uses nodes `url` and `querystring` modules parse the request url
 * Create a Router Constructor that manages requests to `GET`, `POST`, `PUT`, and `DELETE` requests
 * Create a route for doing `CREATE`, `READ`, and `DELETE` operations on your _simple resource_
-* Create a storage module that will store resources by their type and id
+* -Create a storage module that will store resources by their type and id
 
 ## Server Endpoints
 ### `/api/simple-resource-name`
-* `POST` request
+* -`POST` request
   * pass data as stringifed json in the body of a post request to create a resource
-* `GET` request
+* `-GET` request
   * pass an `?id=<uuid>` in the query string to retrieve a specific resource as json
-* `DELETE` request
+* `*****DELETE` request
   * pass an `?id=<uuid>` in the query string to delete a specific resource
   * should return 204 status with no content in the body
 * `PUT` request
