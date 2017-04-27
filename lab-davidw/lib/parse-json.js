@@ -20,8 +20,8 @@ module.exports = function(req) {
         }
       });
 
-      req.on('error', err => {
-        console.error(err);
+      req.on('error', e => {
+        console.error(e);
         reject(err);
       });
       return;
