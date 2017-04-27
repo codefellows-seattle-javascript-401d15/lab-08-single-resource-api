@@ -102,8 +102,39 @@ describe('Server module tests', function() {
   
   describe('GET method', function() {
     describe('retrieve an item', function() {
-      it('')
+      // it('')
       
+      
+      
+      
+      
+      
+      
+      
+      // it('should respond with 200 on a correct request', done => {
+      //   chai.request(server)
+      //   .post('/api/album')
+      //   .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
+      //   .then(function(res) => {
+      //     
+      //   })
+      //   .get('/api/album')
+      //   .end((err, res) => {
+      //     if (err) console.error(err);
+      //     expect(res.status).to.equal(200);
+      //     done();
+      //   });
+      // });
+      
+      it('should respond with 404 if not found', done => {
+        chai.request(server)
+        .get('/')
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
     });
   });
   

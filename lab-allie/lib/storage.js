@@ -35,13 +35,30 @@ exports.fetchAlbum = function(schemaName, id) {
 
 exports.updateAlbum = function(schemaName, album) {
   debug('#storage updateAlbum');
-  if(!schemaName) return Promise.reject(new Error('Schema required'));
-  if(!album) return Promise.reject(new Error('Album required'));
-  
-  storage[schemaName] = {};
-  storage[schemaName][album.id] = album;
-  
-  return Promise.resolve(album);
+  return new Promise((resolve, reject) => {
+    if(!schemaName) return Promise.reject(new Error('Schema required'));
+    if(!album) return Promise.reject(new Error('Album required'));
+    
+    let schema = storage[schemaName];
+    if(!schema) return reject(new Error('Schema does not exist'));
+    
+    if (!schema[album.id]) return reject(new Error('Album does not exist'));
+    
+    if(album.artist) {
+      album.artist = album.body.artist;
+    }
+    
+    if(album.body.title) {
+      album.title = album.body.title;
+    }
+    
+    if(album.body.year) {
+      album.year = album.body.year;
+    }
+    storage[schemaName][album.id] = album;
+
+    resolve(album);
+  });
 };
 
 exports.fetchAll = function(schemaName) {
@@ -62,6 +79,6 @@ exports.removeAlbum = function(schemaName, id) {
   if(!schemaName) return Promise.reject(new Error('Schema required'));
   if(!id) return Promise.reject(new Error('ID required'));
   
-  storage[schemaName] = {};
-  return Promise.resolve(id);
+  delete storage[schemaName];
+  return Promise.resolve();
 };

@@ -70,14 +70,13 @@ router.get('/api/album', (req, res) => {
   res.end();
 });
 
-router.put('/api/album', function(req, res) {
+router.put('/api/album', (req, res) => {
   debug('PUT /api/album');
   console.log(req.body);
+  storage.updateAlbum('album', req.body);
   try {
-    let album = new Album(req.body.artist, req.body.title, req.body.year);
-    storage.createAlbum('album', album);
     res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(album));
+    res.write(JSON.stringify(req.body));
     res.end();
   } catch(e) {
     console.error(e);
