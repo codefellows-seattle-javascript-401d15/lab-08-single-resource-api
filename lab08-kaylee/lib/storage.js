@@ -7,14 +7,14 @@ module.exports = exports = {};
 
 exports.createNote = function(schema, note) {
   debug('#createNote');
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('schema required'));
+    if(!note) return reject(new Error('note required'));
+    if(!storage[schema]) storage[schema] = {};
 
-  if(!schema) return Promise.reject(new Error('schema required'));
-  if(!note) return Promise.reject(new Error('note required'));
-  if(!storage[schema]) storage[schema] = {};
-
-  storage[schema][note.id] = note;
-
-  return Promise.resolve(note);
+    storage[schema][note.id] = note;
+    resolve(note);
+  });
 };
 
 exports.fetchNote = function(schema, id) {
@@ -29,13 +29,28 @@ exports.fetchNote = function(schema, id) {
 
     let note = schemaName[id];
     if(!note) return reject(new Error('note not found'));
-
     resolve(note);
   });
 };
 
-exports.updateNote = function(schema, id) {
+exports.updateNote = function(schema, note) {
   debug('#updateNote');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('schema required'));
+    if(!note) return reject(new Error('note required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    schemaName[note.id] = note;
+    if(!note) return reject(new Error('note not found'));
+    resolve(note);
+  });
+};
+
+exports.deleteNote = function(schema, id) {
+  debug('#deleteNote');
 
   return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
@@ -46,24 +61,7 @@ exports.updateNote = function(schema, id) {
 
     let note = schemaName[id];
     if(!note) return reject(new Error('note not found'));
-
-    resolve(note);
+    delete schemaName[id];
+    resolve();
   });
 };
-
-// exports.deleteNote = function(schema, id) {
-//   debug('#deleteNote');
-//
-//   return new Promise((resolve, reject) => {
-//     if(!schema) return reject(new Error('schema required'));
-//     if(!id) return reject(new Error('id required'));
-//
-//     let schemaName = storage[schema];
-//     if(!schemaName) return reject(new Error('schema not found'));
-//
-//     let note = schemaName[id];
-//     if(!note) return reject(new Error('note not found'));
-//
-//     resolve(note);
-//   });
-// };
