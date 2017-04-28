@@ -79,7 +79,7 @@ describe('Server module tests', function() {
     describe('A request should return an item', function() {
       it('should return the correct response if the id is passed in', done => {
         chai.request(server)
-        .get(`/api/album?id=${testItem.id}`)
+        .get(`/api/album?id=${testGet.id}`)
         .end((err, res) => {
           let expectedResult = JSON.parse(res.text.toString());
           expect(testGet).to.deep.equal(expectedResult);
@@ -89,7 +89,7 @@ describe('Server module tests', function() {
       
       it('should return a status of 200 on proper request', done => {
         chai.request(server)
-        .get(`/api/album?id=${testItem.id}`)
+        .get(`/api/album?id=${testGet.id}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           done();
@@ -121,7 +121,7 @@ describe('Server module tests', function() {
     after(done => {
       chai.request(server)
       .delete('/api/album')
-      .query({id: testItem.id})
+      .query({id: testGet.id})
       .end((err, res) => {
         done();
       });
