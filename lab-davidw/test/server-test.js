@@ -1,6 +1,5 @@
 // 'use strict';
 //
-//
 // const server = require('../server');
 // const chai = require('chai');
 // const http = require('chai-http');
@@ -14,12 +13,59 @@
 //     done();
 //   });
 //
-//   describe('POST method', function() {
-//
+//   after(done => {
+//     server.close();
+//     done();
 //   });
+//
+//
+// describe('GET method', function() {
+//   before(done => {
+//     chai.request(server)
+//     .post('/api/lure')
+//     .send({name: 'momba', type: 'rattler', targets: 'trout'})
+//     .end((err, res) => {
+//       resource = JSON.parse(res.text.toString())
+//       done()
+//     })
+//   })
+//   after(done => {
+//     chai.request(server)
+//     .delete('/api/lure')
+//     .query({id: resource.id})
+//     .end((err, res) => {
+//       done();
+//     })
+//   })
+//
+// describe('/api/lure route', function() {
+//   describe('a properly formatted request', function() {
+//     it('should return a resource given proper id', done => {
+//       chai.request(server)
+//       .get(`api/lure?id=${resource.id}`)
+//       .query({id: resource.id})
+//       .end((err, res) => {
+//         done();
+//       })
+//     })
+//   })
+//
+//
+// describe('POST method', function() {
+//
+//
+//
 // });
 //
-// after(done => {
-//   server.close();
-//   done();
+// describe('PUT method', function() {
+//
+//
+//
 // });
+//
+// describe('DELETE method', function() {
+//
+//
+//     });
+//   });
+// })

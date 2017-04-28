@@ -7,7 +7,11 @@ const debug = require('debug')('http:router');
 const Router = module.exports = function() {
   debug('#Router');
   this.routes = {
-    GET: {},
+    GET: {
+      // '/': function(req, res) {
+      //
+      // }
+    },
     POST: {},
     PUT: {},
     DELETE: {},

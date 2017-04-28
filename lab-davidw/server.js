@@ -19,8 +19,8 @@ router.get('/api/lure', function(req, res) {
     res.write(JSON.stringify(lure));
     res.end();
   })
-  .catch(e => {
-    console.error(e);
+  .catch(err => {
+    console.error(err);
     res.writeHead(404, {'Content-Type': 'text/plain'});
     res.write('bad request');
     res.end();
@@ -47,8 +47,8 @@ router.put('/api/lure', function(req, res) {
       res.write('lure updated!');
       res.end();
     })
-    .catch(e => {
-      console.error(e);
+    .catch(err => {
+      console.error(err);
       res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('not found');
       res.end();
@@ -61,7 +61,7 @@ router.post('/api/lure', function(req, res) {
   debug('#POST /api/lure');
   console.log(req.body);
   try {
-    let lure = new FishingLure(req.body.name, req.body.type, req.body.water);
+    let lure = new FishingLure(req.body.name, req.body.type, req.body.targets, req.body.water);
     storage.createItem('lure', lure);
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.write(JSON.stringify(lure));
@@ -81,8 +81,8 @@ router.post('/api/lure', function(req, res) {
           res.writeHead(204);
           res.end();
         })
-        .catch (e => {
-          console.error(e);
+        .catch (err => {
+          console.error(err);
           res.writeHead(404, {'Content-Type': 'text/plain'});
           res.write('not found, cannot delete');
           res.end();

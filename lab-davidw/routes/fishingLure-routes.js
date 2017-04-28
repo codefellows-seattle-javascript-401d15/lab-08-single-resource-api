@@ -1,8 +1,8 @@
 'use strict';
 
 // const storage = require('../lib/storage');
-// const KidToy = require('../model/fishingLure');
-// const debug = require('debug')('http:router');
+// const FishingLure = require('../model/fishingLure');
+// const debug = require('debug')('http:fishingLure-routes');
 //
 //
 // module.exports = function(router) {};
