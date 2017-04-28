@@ -1,76 +1,58 @@
 'use strict';
 
 const debug = require('debug')('http:storage');
-const storage = {};
+const storage = module.exports = {};
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
+const pathUrl = `${__dirname}/../data`;
 
-module.exports = exports = {};
-
-exports.createItem = function(blueprint, item) {
+storage.createItem = function(blueprint, item) {
   debug('#createItem');
 
-  if(!blueprint) return Promise.reject(new Error('blueprint required'));
-  if(!item) return Promise.reject(new Error('Item required'));
-  if(!storage[blueprint])
-    storage[blueprint] = {};
-
-  storage[blueprint][item.id] = item;
-
-  return Promise.resolve(item);
+  return fs.statAsync(`${pathUrl}`)
+  .catch(err => {
+    err.status = 400;
+    return Promise.reject(err);
+  })
+  .then(() => {
+    return fs.writeFileAsync(`${pathUrl}/${blueprint}${item.id}.json`,
+    JSON.stringify(item));
+  })
+  .then (() => {
+    return Promise.resolve(item);
+  });
 };
 
-exports.fetchItem = function(blueprint, id) {
+storage.fetchItem = function(blueprint, id) {
   debug('#fetchItem');
 
-  return new Promise((resolve, reject) => {
-    if(!blueprint) return reject(new Error('blueprint required'));
-    if(!id) return reject(new Error('id required'));
-
-    let blueprintName = storage[blueprint];
-    if(!blueprintName) return reject(new Error('blueprint not found'));
-
-    let item = blueprintName[id];
-    if(!item) return reject(new Error('item not found'));
-
-    resolve(item);
+  let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
+  return fs.statAsync(pathUrlId)
+  .catch(err => {
+    err.status = 404;
+    return Promise.reject(err);
+  })
+  .then(() => {
+    return fs.readFileAsync(pathUrlId);
+  })
+  .then((data) => {
+    return Promise.resolve(JSON.parse(data.toString()));
   });
 };
 
-exports.updateItem = function(blueprint, id, newWeapon) {
-  debug('#updateItem');
-
-  return new Promise((resolve, reject) => {
-    if(!blueprint) return reject(new Error('blueprint required'));
-    if(!id) return reject(new Error('id required'));
-
-    let blueprintName = storage[blueprint];
-    if(!blueprintName) return reject(new Error('blueprint not found'));
-
-    let item = blueprintName[id];
-    if(!item) return reject(new Error('item not found'));
-
-    if(newWeapon.name)
-
-
-
-    resolve(item);
-  });
-};
-
-exports.deleteItem = function(blueprint, id) {
+storage.deleteItem = function(blueprint, id) {
   debug('#deleteItem');
 
-  return new Promise((resolve, reject) => {
-    if(!blueprint) return reject(new(Error('blueprint required')));
-    if(!id) return reject(new Error('id required'));
-
-    // let blueprintName = storage[blueprint];
-    // if(!blueprintName) return reject(new Error('blueprint delte not found'));
-    //
-    // let item = blueprintName[id];
-    // if(!item) return reject(new Error('id not found'));
-
-    delete storage[blueprint][id];
-
-    resolve();
+  let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
+  return fs.statAsync(pathUrlId)
+  .catch(err => {
+    err.status = 404;
+    return Promise.reject(err);
+  })
+  .then(() => {
+    return fs.unlinkAsync(pathUrlId);
+  })
+  .then(() => {
+    return Promise.resolve();
   });
 };
