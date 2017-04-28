@@ -19,12 +19,12 @@ describe('killer-dragon module', function() {
       expect(this.newDragon.type).to.equal('big')
       done()
     })
-    it('should have a hazard of "true"', done => {
-      expect(this.newDragon.hazard).to.be('true')
+    it('should have a killer of "true"', done => {
+      expect(this.newDragon.killer).to.be.true
       done()
     })
     it('should have an id of a unique uuid value', done => {
-      let pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
+      let pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
       expect(this.newDragon.id).to.match(pattern)
       done()
     })

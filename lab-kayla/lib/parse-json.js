@@ -10,7 +10,7 @@ module.exports = function(req) {
       let body = '';
 
       req.on('data', data => body += data.toString());
-      req.on('end',  () => {
+      req.on('end', () => {
         try{
           req.body = JSON.parse(body);
           resolve(req);
