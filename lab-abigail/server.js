@@ -52,9 +52,12 @@ router.post('/api/food', function(req, res) {
 
 router.delete('/api/food', function(req, res) {
   debug('DELETE /api/food');
+  console.log(req.body);
+
   if(req.url.query.id) {
     storage.deleteItem('food', req.url.query.id)
-    .then( () => {
+    .then(id => {
+      console.log(id, 'delete');
       res.writeHead(204, {'Content-Type': 'application/json'});
       res.end();
     })
@@ -74,9 +77,15 @@ router.delete('/api/food', function(req, res) {
 
 router.put('/api/food', function(req, res) {
   debug('PUT /api/food');
+  console.log(req.body);
+
   if(req.url.query.id) {
-    storage.updateItem('food', req.url.query.id)
+    storage.fetchItem('food', req.url.query.id)
     .then(food => {
+      if (req.body.name) food.name = req.body.name;
+      if (req.body.type) food.type = req.body.type;
+      if (req.body.cost) food.cost = req.body.cost;
+
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(food));
       res.end();
