@@ -2,9 +2,10 @@ const http = require('chai-http');
 const chai = require('chai');
 const server = require('../server');
 const expect = chai.expect;
+const superagent = require('superagent')
+
 
 chai.use(http);
-
 
 describe('Server function check', function () {
   before(done => {
@@ -68,13 +69,13 @@ describe('Server function check', function () {
             done();
           });
         });
-      describe('An incorrectly formatted request', function () {
-        it('should return an error', done => {
-
-
-        })
-      })
-      });
+      // describe('An incorrectly formatted request', function () {
+      //   it('should return an error', done => {
+      //     done()
+      //
+      //   })
+      // })
+    });
 
 
 
