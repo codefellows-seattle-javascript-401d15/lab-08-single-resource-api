@@ -10,10 +10,11 @@ const PORT = process.env.PORT || 3000;
 const router = new Router();
 const server = module.exports = http.createServer(router.route());
 
-router.get('/api/console', function(req, res) {
-  debug('GET /api/console');
-  if(req.url.query.id) {
-    storage.fetchItem('console', req.url.query.id)
+router.get('/api/consoles', function(req, res) {
+  debug('GET /api/consoles');
+
+  if (req.url.query.id) {
+    storage.fetchItem('consoles', req.url.query.id)
     .then(hardware => {
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(hardware));
@@ -32,26 +33,27 @@ router.get('/api/console', function(req, res) {
 router.post('/api/consoles', function(req, res) {
   debug('POST /api/consoles');
 
-  console.log(req.body);
+  // console.log(req);
+  let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
   try {
-    let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
+    // console.log(hardware, 'hardware log');
     storage.createItem('consoles', hardware);
     res.writeHead(201, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(hardware));
     res.end();
   } catch(e) {
-    console.error(e);
+    console.error(e, 'post try');
     res.writeHead(400, {'Content-Type': 'text/plain'});
     res.write('bad request');
     res.end();
   }
 });
 
-router.delete('/api/console', function(req, res) {
-  debug('DELETE /api/console');
+router.delete('/api/consoles', function(req, res) {
+  debug('DELETE /api/consoles');
 
   if(req.url.query.id) {
-    storage.deleteItem('console', req.url.query.id)
+    storage.deleteItem('consoles', req.url.query.id)
     .then(() => {
       res.writeHead(204, {'Content-Type': 'none'});
       res.end();
@@ -66,12 +68,12 @@ router.delete('/api/console', function(req, res) {
   }
 });
 
-router.put('/api/console', function(req, res) {
-  debug('PUT api/console');
+router.put('/api/consoles', function(req, res) {
+  debug('PUT api/consoles');
 
-  if (req.url.query.id) {
-    let newItem = new Hardware(req.body.name, req.body.manufacturer, req.releaseDate);
-    storage.updateItem('console', req.url.query.id, newItem)
+  if (req.body.id) {
+    let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
+    storage.updateItem('consoles', req.body.id, hardware)
     .then(hardware => {
       res.writeHead(202, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(hardware));

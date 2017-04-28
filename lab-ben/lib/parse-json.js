@@ -3,7 +3,7 @@
 const debug = require('debug')('http:parser-json');
 
 module.exports = function(req) {
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     debug('#parser-json');
 
     if(req.method === 'POST' || req.method === 'PUT') {

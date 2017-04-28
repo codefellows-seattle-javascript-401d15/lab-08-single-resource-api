@@ -39,7 +39,7 @@ Router.prototype.delete = function(endpoint, callback) {
 };
 
 Router.prototype.route = function() {
-  debug('#routes');
+  debug('#route');
 
   return (req, res) => {
     Promise.all([
@@ -57,7 +57,7 @@ Router.prototype.route = function() {
       res.end();
     })
     .catch(err => {
-      console.error(err);
+      console.error(err, 'route error');
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write('bad request');
       res.end();
