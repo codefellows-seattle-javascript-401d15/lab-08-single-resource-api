@@ -3,28 +3,28 @@ const Router = require('./lib/router');
 const storage = require('./lib/storage');
 const Ninjas = require('./model/ninjas');
 const debug = require('debug')('http:server');
-const PORT = process.env.PORT ||3000;
+const PORT = process.env.PORT || 3000;
 
 const router = new Router();
 const server = module.exports = http.createServer(router.route());
 
 router.get('/api/ninja', function(req, res) {
-debug('GET /api/ninja');
-if(req.url.query.id) {
-  storage.fetchItem('ninja', req.url.query.id)
-  .then(ninja => {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(ninja));
-    res.end();
-  })
-  .catch(err => {
-    console.error(err);
-    res.writeHead(404, {'Content-Type': 'text/plain'});
-    res.write('not found');
-    res.end();
-  });
-  return;
-}
+  debug('GET /api/ninja');
+  if(req.url.query.id) {
+    storage.fetchItem('ninja', req.url.query.id)
+    .then(ninja => {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(JSON.stringify(ninja));
+      res.end();
+    })
+    .catch(err => {
+      console.error(err);
+      res.writeHead(404, {'Content-Type': 'text/plain'});
+      res.write('not found');
+      res.end();
+    });
+    return;
+  }
 
   res.writeHead(400, {'Content-Type': 'text/plain'});
   res.write('bad request');
@@ -62,6 +62,24 @@ router.delete('/api/ninja', function(req, res) {
     res.write('could not delete your stupid fucking ninja');
     res.end();
   }
+});
+
+router.put('/api/ninja', function(req, res) {
+  debug('PUT /api/ninja');
+
+  storage.putItem('ninja', req.body.id, req.body)
+  .then(ninja => {
+    res.writeHead(202, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify(ninja));
+    res.end();
+  })
+  .catch(err => {
+    console.error(err);
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.write('not found');
+    res.end();
+  });
+  return;
 });
 
 server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

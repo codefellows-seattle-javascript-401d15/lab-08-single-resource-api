@@ -3,7 +3,7 @@
 const debug = require('debug')('http:ninjas');
 const uuid = require('uuid/v4');
 
-const Ninjas = module.exports = function(name, clan, weapons) {
+module.exports = function(name, clan, weapons) {
   if(!name || !clan || !weapons) throw new Error('Invalid Arguments');
   this.name = name;
   this.clan = clan;

@@ -4,7 +4,7 @@
   "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab-08-single-resource-api\r =====",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/renegadellama/lab-08-single-resource-api#readme",
   "devDependencies": {
-    "debug": "^2.6.5"
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.5",
+    "mocha": "^3.3.0"
   },
   "dependencies": {
     "uuid": "^3.0.1"
