@@ -38,7 +38,7 @@ exports.deleteItem = function(schema, id) {
   debug('#deleteItem');
 
   return new Promise((resolve, reject) => {
-    if(!schema) return reject(new Error('shema required'));
+    if(!schema) return reject(new Error('schema required'));
     if(!id) return reject(new Error('id required'));
 
     let schemaName = storage[schema];
