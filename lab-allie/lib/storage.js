@@ -48,11 +48,11 @@ exports.updateAlbum = function(schemaName, album) {
       album.artist = album.body.artist;
     }
     
-    if(album.body.title) {
+    if(album.title) {
       album.title = album.body.title;
     }
     
-    if(album.body.year) {
+    if(album.year) {
       album.year = album.body.year;
     }
     storage[schemaName][album.id] = album;
