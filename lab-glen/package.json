@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
+    "start": "nodemon server.js",
+    "watch": "nodemon server.js",
     "debug": "DEBUG=http* nodemon server.js"
   },
   "repository": {

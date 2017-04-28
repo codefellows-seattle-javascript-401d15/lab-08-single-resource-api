@@ -3,7 +3,6 @@
 const parseJson = require('./parse-json');
 const parseUrl = require('./parse-url');
 const debug = require('debug')('http:router');
-
 const Router = module.exports = function () {
   debug('#Router');
   this.routes = {
@@ -44,7 +43,6 @@ Router.prototype.route = function() {
     .then(() => {
       if(typeof this.routes[req.method][req.url.pathname] === 'function') {
         this.routes[req.method][req.url.pathname](req, res);
-        console.log(this);
         return;
       }
 

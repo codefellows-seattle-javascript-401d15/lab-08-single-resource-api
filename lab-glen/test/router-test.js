@@ -5,6 +5,7 @@ const expect = chai.expect;
 
 chai.use(http);
 
+
 describe('Server function check', function () {
   before(done => {
     server.listen(3000);
@@ -26,8 +27,7 @@ describe('Server function check', function () {
         chai.request(server)
         .post('/api/weapon')
         .send({
-          name: 'mossberg',
-          type: 'shotgun',
+
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -38,7 +38,46 @@ describe('Server function check', function () {
   });
 
   describe('GET method', function () {
+    let resource;
+    before(done => {
+      chai.request(server)
+      .post('/api/weapon')
+      .send({name: 'destroyer', type: 'hammer'})
+      .end((err, res) => {
+        resource = JSON.parse(res.text.toString());
+        done();
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/weapon')
+      .query({id: resource.id})
+      .end((err) => {
+        console.error(err);
+        done();
+      });
+    });
     describe('/api/weapon endpoint', function () {
+      describe('A properly formatted request', function () {
+        it('should return a resource given proper ID', done => {
+          chai.request(server)
+          .get(`/api/weapon?id=${resource.id}`)
+          .end((err, res) => {
+            let expected = JSON.parse(res.text.toString());
+            expect(resource).to.deep.equal(expected);
+            done();
+          });
+        });
+      describe('An incorrectly formatted request', function () {
+        it('should return an error', done => {
+
+
+        })
+      })
+      });
+
+
+
       it('should respond with a 400 on bad request', done => {
         chai.request(server)
         .post('/wrong')
@@ -48,15 +87,8 @@ describe('Server function check', function () {
           done();
         });
       });
-      it('should respond with a 201 on proper request', done => {
-        chai.request(server)
-        .post('/api/weapon?id=1234')
-        .send({id:1234})
-        .end((err, res) => {
-          expect(res.status).to.equal(201);
-          done();
-        });
-      });
+
+
     });
   });
 
