@@ -51,17 +51,6 @@ describe('Server module tests', function() {
         });
       });
       
-      // it.only('should contain a header', done => {
-      //   chai.request(server)
-      //   .post('/api/album')
-      //   .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
-      //   .end((err, res) => {
-      //     if (err) console.error(err);
-      //     expect(res.body).to.have.header('Context-Type', 'application/json');
-      //     done();
-      //   });
-      // });
-      
       it('should be an object', done => {
         chai.request(server)
         .post('/api/album')
@@ -72,60 +61,52 @@ describe('Server module tests', function() {
           done();
         });
       });
-      
-      // it.only('should be in JSON format', done => {
-      //   chai.request(server)
-      //   .post('/api/album')
-      //   .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
-      //   .end((err, res) => {
-      //     if (err) console.error(err);
-      //     expect(res.body.artist).to.be.html;
-      //     done();
-      //   });
-      // });
+    });
+  });
+  
+  describe('GET method', function() {
+    let testGet;
+    before(done => {
+      chai.request(server)
+      .post('/api/album')
+      .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
+      .end((err, res) => {
+        testGet = JSON.parse(res.text.toString());
+      });
+      done();
     });
     
-    describe('undefined endpoint', function() {
-      it('should respond with 404 if not found', done => {
+    describe('A request should return an item', function() {
+      it('should return the correct response if the id is passed in', done => {
         chai.request(server)
-        .post('/nada')
-        .send({})
+        .get(`/api/album?id=${testItem.id}`)
+        .end((err, res) => {
+          let expectedResult = JSON.parse(res.text.toString());
+          expect(testGet).to.deep.equal(expectedResult);
+          done();
+        });
+      });
+      
+      it('should return a status of 200 on proper request', done => {
+        chai.request(server)
+        .get(`/api/album?id=${testItem.id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+      });
+      
+      it('should return an error on a bad request', done => {
+        chai.request(server)
+        .get('/api/blah')
         .end((err, res) => {
           expect(res.status).to.equal(404);
           done();
         });
       });
     });
-    
-    
-  });
-  
-  describe('GET method', function() {
-    describe('retrieve an item', function() {
-      // it('')
-      
-      
-      
-      
-      
-      
-      
-      
-      // it('should respond with 200 on a correct request', done => {
-      //   chai.request(server)
-      //   .post('/api/album')
-      //   .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
-      //   .then(function(res) => {
-      //     
-      //   })
-      //   .get('/api/album')
-      //   .end((err, res) => {
-      //     if (err) console.error(err);
-      //     expect(res.status).to.equal(200);
-      //     done();
-      //   });
-      // });
-      
+        
+    describe('Error if not found', function() {
       it('should respond with 404 if not found', done => {
         chai.request(server)
         .get('/')
@@ -136,9 +117,73 @@ describe('Server module tests', function() {
         });
       });
     });
+    
+    after(done => {
+      chai.request(server)
+      .delete('/api/album')
+      .query({id: testItem.id})
+      .end((err, res) => {
+        done();
+      });
+    });
   });
   
+  describe('PUT method', function(){
+    let testPut;
+    before(done => {
+      chai.request(server)
+      .post('/api/album')
+      .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
+      .end((err, res) => {
+        testPut = JSON.parse(res.text.toString());
+      });
+      done();
+    });
+    
+    
+    after(done => {
+      chai.request(server)
+      .delete('api/album')
+      .query({id: testPut.id})
+      .end((err, res) => {
+        done();
+      });
+    });
+  });
   
+  describe('DELETE method', function() {
+    let testDelete;
+    before(done => {
+      chai.request(server)
+      .post('/api/album')
+      .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
+      .end((err, res) => {
+        testDelete = JSON.parse(res.text.toString());
+      });
+      done();
+    });
+    
+    after(done => {
+      chai.request(server)
+      .delete('api/album')
+      .query({id: testDelete.id})
+      .end((err, res) => {
+        done();
+      });
+    });
+  });
+  
+  describe('undefined endpoint', function() {
+    it('should respond with 404 if not found', done => {
+      chai.request(server)
+      .post('/nada')
+      .send({})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
+  });
   
   after(done => {
     server.close();
