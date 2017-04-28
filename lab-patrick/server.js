@@ -55,12 +55,14 @@ router.put('/api/car', function(req, res){
   console.log(req.body);
   if(req.body.id){
     try {
-      let car = new Car(req.body.name, req.body.model, req.body.horsepower);
-      storage.updateItem('car', req.body.id, car);
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(car));
-      res.end();
-    } catch(e) {
+      storage.updateItem('car', req.body.id, req.body)
+      .then(car =>{
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(car));
+        res.end();
+      });
+    }
+    catch(e) {
       console.error(e);
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write('bad request');

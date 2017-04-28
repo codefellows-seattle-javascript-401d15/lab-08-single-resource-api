@@ -34,6 +34,27 @@ exports.fetchItem = function(schema, id) {
   });
 };
 
+exports.updateItem = function(schema, id, car){
+  debug('#updateItem');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('shema required'));
+    if(!id) return reject(new Error('id required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    let item = schemaName[id];
+    if(!item) return reject(new Error('item not found'));
+
+    if(item.name) item.name = car.name;
+    if(item.model) item.model = car.model;
+    if(item.horsepower) item.horsepower = car.horsepower;
+
+    resolve(car);
+  });
+};
+
 exports.deleteItem = function(schema, id) {
   debug('#deleteItem');
 
@@ -49,24 +70,5 @@ exports.deleteItem = function(schema, id) {
 
     delete(schemaName[id]);
     resolve(item);
-  });
-};
-
-exports.updateItem = function(schema, id, item){
-  debug('#updateItem');
-
-  return new Promise((resolve, reject) => {
-    if(!schema) return reject(new Error('shema required'));
-    if(!id) return reject(new Error('id required'));
-    if(!item) return reject(new Error('item not found'));
-
-    let carExists = exports.fetchItem('car', id)
-    .then(carExists =>{
-      if(item.name) carExists.name =item.name;
-      if(item.model) carExists.model = item.model;
-      if(item.horsepower) carExists.horsepower = carExists.horsepower;
-    });
-    if(!carExists) return reject('rejected');
-    resolve(carExists);
   });
 };
