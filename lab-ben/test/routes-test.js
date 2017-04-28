@@ -30,21 +30,109 @@ describe('Server module', function() {
           done();
         });
       });
-      it('should respond with a 400 on bad request', () => {
+      // it('should respond with a 400 on bad request', () => {
+      //   chai.request(server)
+      //   .post('/api/consoles')
+      //   .send({})
+      //   .end((err, res) => {
+      //     expect(res).status(400);
+      //     expect(res.body).to.include('bad request');
+      //   });
+      // });
+    });
+  });
+
+  describe('GET method', function() {
+    describe('/api/consoles', function() {
+      before(done => {
         chai.request(server)
         .post('/api/consoles')
-        .send({})
+        .send({
+          name: 'N64',
+          manufacturer: 'Nintendo',
+          releaseDate: 1996,
+        })
         .end((err, res) => {
-          expect(res).status(400);
-          expect(res.body).to.include('bad request');
+          this.result = res;
+          done();
+        });
+      });
+      it('should respond with a status of 200 on proper request', () => {
+        chai.request(server)
+        .get('/api/consoles')
+        .query({id: this.result.body.id})
+        .end((err, res) => {
+          // console.log(res);
+          expect(res).status(200);
+          expect(res.body.name).to.equal('N64');
         });
       });
     });
   });
 
-  describe('GET method', function() {
+  describe('PUT method', function() {
+    describe('/api/consoles', function() {
+      before(done => {
+        chai.request(server)
+        .post('/api/consoles')
+        .send({
+          name: 'Dolphin',
+          manufacturer: 'Nintendo',
+          releaseDate: 2001,
+        })
+        .end((err, res) => {
+          this.result = res;
+          done();
+        });
+      });
 
-  })
+      it('should respond with a status of 202 on proper request', done => {
+        chai.request(server)
+        .put('/api/consoles')
+        .send({
+          name: 'GameCube',
+          manufacturer: 'Nintendo',
+          releaseDate: 2001,
+          id: this.result.body.id,
+        })
+        .end((err, res) => {
+          console.log(res.status);
+          expect(res).status(202);
+          expect(res.body.name).to.equal('GameCube');
+          expect(res.body.id).to.equal(this.result.body.id);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('DELETE method', function() {
+    describe('/api/consoles', function() {
+      before(done => {
+        chai.request(server)
+        .post('/api/consoles')
+        .send({
+          name: 'VirtualBoy',
+          manufacturer: 'Nintendo',
+          releaseDate: 1988,
+        })
+        .end((err, res) => {
+          this.result = res;
+          done();
+        });
+      });
+
+      it('should respond with a 204 on proper request', done => {
+        chai.request(server)
+        .delete('/api/consoles')
+        .query({id: this.result.body.id})
+        .end((err, res) => {
+          expect(res).status(204);
+          done();
+        });
+      });
+    });
+  });
 
   after(done => {
     server.close();

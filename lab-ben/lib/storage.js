@@ -39,7 +39,7 @@ exports.fetchItem = function(schema, id) {
 exports.deleteItem = function(schema, id) {
   debug('#deleteItem');
 
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
     if(!id) return reject(new Error('id required'));
 
@@ -57,7 +57,7 @@ exports.deleteItem = function(schema, id) {
 exports.updateItem = function(schema, id, newItem) {
   debug('#updateItem');
 
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
     if(!id) return reject(new Error('id required'));
     if (!newItem) return reject(new Error('item required'));
@@ -67,7 +67,7 @@ exports.updateItem = function(schema, id, newItem) {
 
     let old = schemaName[id];
     if(!old) return reject(new Error('item not found'));
-    newItem[id] = id;
+    newItem.id = id;
 
     storage[schema][id] = newItem;
 
