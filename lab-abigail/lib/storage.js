@@ -5,16 +5,16 @@ const storage = {};
 
 module.exports = exports = {};
 
-exports.createItem = function(schema, item) {
+exports.createItem = function(schema, food) {
   debug('#createItem');
 
-  if(!schema) return Promise.reject(new Error('shema required'));
-  if(!item) return Promise.reject(new Error('item required'));
+  if(!schema) return Promise.reject(new Error('schema required'));
+  if(!food) return Promise.reject(new Error('food required'));
   if(!storage[schema]) storage[schema] = {};
 
-  storage[schema][item.id] = item;
+  storage[schema][food.id] = food;
 
-  return Promise.resolve(item);
+  return Promise.resolve(food);
 };
 
 exports.fetchItem = function(schema, id) {
@@ -27,9 +27,28 @@ exports.fetchItem = function(schema, id) {
     let schemaName = storage[schema];
     if(!schemaName) return reject(new Error('schema not found'));
 
-    let item = schemaName[id];
-    if(!item) return reject(new Error('item not found'));
+    let food = schemaName[id];
+    if(!food) return reject(new Error('food not found'));
 
-    resolve(item);
+    return(resolve(food));
+  });
+};
+
+exports.deleteItem = function(schema, id) {
+  debug('#deleteItem');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('shema required'));
+    if(!id) return reject(new Error('id required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    let food = schemaName[id];
+    if(!food) return reject(new Error('food not found'));
+
+    delete storage[schema][id];
+
+    return(resolve(id));
   });
 };
