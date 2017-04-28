@@ -17,7 +17,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "debug": "DEBUG=http* nodemon server.js"
   },
   "author": "Kaylee Alvarado",
   "license": "MIT"

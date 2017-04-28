@@ -52,7 +52,7 @@ Router.prototype.route = function() {
     })
     .catch(err => {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write('bad request');
+      res.write(`bad request... error: ${err}`);
       res.end();
     });
   };
