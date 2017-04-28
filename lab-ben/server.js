@@ -32,17 +32,16 @@ router.get('/api/console', function(req, res) {
 router.post('/api/consoles', function(req, res) {
   debug('POST /api/consoles');
 
-  console.log(req.body);
+  // console.log(req);
+  let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
   try {
-    let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
-    storage.createItem('consoles', hardware)
-    .then(newHardware => {
-      res.writeHead(201, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(newHardware));
-      res.end();
-    });
+    // console.log(hardware, 'hardware log');
+    storage.createItem('consoles', hardware);
+    res.writeHead(201, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify(hardware));
+    res.end();
   } catch(e) {
-    console.error(e);
+    console.error(e, 'post try');
     res.writeHead(400, {'Content-Type': 'text/plain'});
     res.write('bad request');
     res.end();
@@ -83,7 +82,7 @@ router.put('/api/console', function(req, res) {
       console.error(err);
       res.writeHead(400, {'Content-Type': 'text/plain'});
     });
-  }
+  } 
 });
 
 server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

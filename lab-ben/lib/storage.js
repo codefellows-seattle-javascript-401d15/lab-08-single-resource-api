@@ -14,13 +14,15 @@ exports.createItem = function(schema, item) {
 
   storage[schema][item.id] = item;
 
-  return Promise.resolve(item);
+  // console.log(item, 'storage log');
+
+  Promise.resolve(item);
 };
 
 exports.fetchItem = function(schema, id) {
   debug('#fetchItem');
 
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
     if(!id) return reject(new Error('id required'));
 
