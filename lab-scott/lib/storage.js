@@ -36,6 +36,8 @@ exports.fetchItem = function(schema, id) {
   });
 };
 
+
+//DELETE
 exports.deleteItem = function(schema, id){
   debug('#fetchItem');
 

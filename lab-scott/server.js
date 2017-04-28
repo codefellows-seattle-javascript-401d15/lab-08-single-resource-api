@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3000;
 const router = new Router();
 const server = module.exports = http.createServer(router.route());
 
+// require('./routes/planet-routes')(router);
+
 router.get('/api/planet', function(req,res){
   debug('GET /api/planet');
   console.log(req.url.query.id);
@@ -60,7 +62,7 @@ router.put('/api/planet', function(req,res){
     storage.fetchItem('planet', req.url.query.id)
       .then(planet => {
         if(req.body.name) planet.name = req.body.name;
-        if(req.body.universe) planet.universe = req.universe.name;
+        if(req.body.universe) planet.universe = req.body.universe;
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(planet));
         res.end();
