@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('http:parse-json')
+const debug = require('debug')('http:parse-json');
 
 module.exports = function(req) {
   return new Promise((resolve, reject) => {

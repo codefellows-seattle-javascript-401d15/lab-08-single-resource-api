@@ -2,8 +2,7 @@ const http = require('chai-http');
 const chai = require('chai');
 const server = require('../server');
 const expect = chai.expect;
-const superagent = require('superagent')
-
+const pathUrl = `http://localhost:${process.env.PORT || 3000}`;
 
 chai.use(http);
 
@@ -27,11 +26,10 @@ describe('Server function check', function () {
       it('should return a weapon', (done) => {
         chai.request(server)
         .post('/api/weapon')
-        .send({
-
-        })
+        .send({name: 'punisher', type: 'shotgun'})
         .end((err, res) => {
-          expect(res.status).to.equal(200);
+          if(err) console.error(err);
+          expect(res).to.have.status(200);
           done();
         });
       });
@@ -75,7 +73,7 @@ describe('Server function check', function () {
       //
       //   })
       // })
-    });
+      });
 
 
 

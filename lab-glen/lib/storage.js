@@ -3,7 +3,7 @@
 const debug = require('debug')('http:storage');
 const storage = module.exports = {};
 const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs'));
+const fs = Promise.promisifyAll(require('fs'), {suffix: 'Async'});
 const pathUrl = `${__dirname}/../data`;
 
 storage.createItem = function(blueprint, item) {
@@ -40,6 +40,23 @@ storage.fetchItem = function(blueprint, id) {
   });
 };
 
+storage.updateItem = function(blueprint, id) {
+  debug('#updateItem');
+  let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
+
+  return fs.readFileAsync(`${pathUrlId}`)
+  .then( (item) => {
+    fs.writeFileAsync(`${pathUrlId}`, JSON.stringify(item))
+    .then((item) => {
+      console.log(item);
+    })
+    .catch(console.error);
+  })
+  .catch(console.error);
+
+};
+
+
 storage.deleteItem = function(blueprint, id) {
   debug('#deleteItem');
 
@@ -56,3 +73,22 @@ storage.deleteItem = function(blueprint, id) {
     return Promise.resolve();
   });
 };
+
+
+
+
+// return fs.statProm(`${pathUrl}`)
+// .catch(err => {
+//   err.status = 400;
+//   return Promise.reject(err);
+// }).then(() => {
+//   return fs.readFileProm(pathUrlId)
+// })
+//   .then( () => {
+//     fs.writeFileProm(`${pathUrlId}`, JSON.stringify(item))
+//     .then((item) => {
+//       console.log(item);
+//     })
+//     .catch(console.error)
+//   })
+//   .catch(console.error)

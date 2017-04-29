@@ -25,7 +25,9 @@
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
+    "bluebird": "^3.5.0",
     "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "debug": "^2.6.4",
     "mocha": "^3.3.0"
   }

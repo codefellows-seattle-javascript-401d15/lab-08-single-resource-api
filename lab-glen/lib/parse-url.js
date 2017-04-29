@@ -1,8 +1,8 @@
 'use strict';
 
 const debug = require('debug')('http:parse-url');
-const parseUrl = require('url').parse
-const parseQuery = require('querystring').parse
+const parseUrl = require('url').parse;
+const parseQuery = require('querystring').parse;
 
 module.exports = function(req) {
   debug('#parse-url');
