@@ -3,7 +3,6 @@
 const server = require('../server');
 const chai = require('chai');
 const expect = chai.expect;
-const FoodItem = require('../model/food.js');
 const http = require('chai-http');
 
 
@@ -12,14 +11,6 @@ chai.use(http);
 describe('HTTP Server module', function(){
   before(function(done){
     server.listen(3000);
-    done();
-  });
-});
-
-describe('kid toy module', function() {
-  it('should create a new toy object', done => {
-    let newFood = new FoodItem('music box', 'musical', true);
-    expect(newFood.name).to.equal('music box');
     done();
   });
 });
@@ -35,41 +26,77 @@ describe('ensure that api returns a status code of 404 for routes that have not 
   });
 });
 
-describe('testing routes for api', function() {
+describe('POST method', function() {
+  describe('Verify item created', function() {
+    it('should create food and verify name', done => {
+      chai.request(server)
+      .post('/api/food')
+      .send({'name': 'apple', 'type': 'red', 'cost': '1.5'})
+      .end((err, res) => {
+        if (err) console.error(err);
+        console.log('res.body', res.body);
+        expect(res.body.name).to.equal('apple');
+        done();
+      });
+    });
 
-  let newFood = new FoodItem('music box', 'musical', true);
+    it('should create food and verify type', done => {
+      chai.request(server)
+      .post('/api/food')
+      .send({'name': 'apple', 'type': 'red', 'cost': '1.5'})
+      .end((err, res) => {
+        if (err) console.error(err);
+        expect(res.body.type).to.equal('red');
+        done();
+      });
+    });
 
-  describe('POST method', function(){
-
-    describe('test 200, valid request made with an id', function() {
-      it ('should respond with a 200 on proper request', function(done){
-        chai.request(server)
-        .post(`/food`)
-        .send({name: 'banana', type: 'yellow', cost: true})
-        .end((err, res) => {
-          if (err) throw err;
-          expect(res).to.have.status(200);
-          done();
-        });
+    it('should create food and verify cost', done => {
+      chai.request(server)
+      .post('/api/food')
+      .send({'name': 'apple', 'type': 'red', 'cost': '1.5'})
+      .end((err, res) => {
+        if (err) console.error(err);
+        expect(res.body.cost).to.equal('1.5');
+        done();
       });
     });
   });
 
-  describe('GET method', function(){
+  describe('Verify route status and errors', function () {
 
-    describe('test 200, responds with not found for valid request made with an id that was not found', function() {
-      it ('should respond with a 200 on proper request', function(done){
-        chai.request(server)
-        .get(`/api/food?id=${newFood.id}`)
-        .send({})
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          done();
-        });
+    it('should respond with 200 on proper request', done => {
+      chai.request(server)
+      .post('/api/food')
+      .send({'name': 'apple', 'type': 'red', 'cost': '1.5'})
+      .end((err, res) => {
+        if (err) console.error(err);
+        expect(res.status).to.equal(200);
+        done();
       });
     });
 
+    it('should respond with 404 if route is not found', done => {
+      chai.request(server)
+      .post('/')
+      .send({})
+      .end((err, res) => {
+        if (err) console.error(err);
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
 
+    it('should be an object', done => {
+      chai.request(server)
+      .post('/api/food')
+      .send({'name': 'apple', 'type': 'red', 'cost': '1.5'})
+      .end((err, res) => {
+        if (err) console.error(err);
+        expect(res).to.be.a('object');
+        done();
+      });
+    });
   });
 });
 
