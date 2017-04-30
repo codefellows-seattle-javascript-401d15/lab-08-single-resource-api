@@ -5,7 +5,6 @@ const chai = require('chai');
 const expect = chai.expect;
 const http = require('chai-http');
 
-
 chai.use(http);
 
 describe('HTTP Server module', function(){
@@ -176,7 +175,7 @@ describe('PUT method', function() {
         .put(`/api/food?id=${food.id}`)
         .end((err, res) => {
           if (err) console.error(err);
-          expect(res.status).to.equal(200);
+          expect(res.status).to.equal(202);
           done();
         });
       });

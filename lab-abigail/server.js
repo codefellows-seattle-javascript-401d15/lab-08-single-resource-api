@@ -86,7 +86,7 @@ router.put('/api/food', function(req, res) {
       if (req.body.type) food.type = req.body.type;
       if (req.body.cost) food.cost = req.body.cost;
 
-      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.writeHead(202, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(food));
       res.end();
     })
