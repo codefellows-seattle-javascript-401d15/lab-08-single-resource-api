@@ -30,15 +30,15 @@ describe('Server module', function() {
           done();
         });
       });
-      // it('should respond with a 400 on bad request', () => {
-      //   chai.request(server)
-      //   .post('/api/consoles')
-      //   .send({})
-      //   .end((err, res) => {
-      //     expect(res).status(400);
-      //     expect(res.body).to.include('bad request');
-      //   });
-      // });
+      it('should respond with a 400 on bad request', () => {
+        chai.request(server)
+        .post('/api/consoles')
+        .send({})
+        .end((err, res) => {
+          expect(res).status(400);
+          expect(res.body).to.include('bad request');
+        });
+      });
     });
   });
 
@@ -57,14 +57,24 @@ describe('Server module', function() {
           done();
         });
       });
-      it('should respond with a status of 200 on proper request', () => {
+      it('should respond with a status of 200 on proper request', done => {
         chai.request(server)
         .get('/api/consoles')
         .query({id: this.result.body.id})
         .end((err, res) => {
-          // console.log(res);
           expect(res).status(200);
           expect(res.body.name).to.equal('N64');
+          done();
+        });
+      });
+      it('should respond with a status of 404 for a valid request with an invalid id', done => {
+        chai.request(server)
+        .get('/api/consoles')
+        .query({id: 7})
+        .end((err, res) => {
+          expect(res).status(404);
+          expect(res.notFound).to.be.true;
+          done();
         });
       });
     });
@@ -96,10 +106,19 @@ describe('Server module', function() {
           id: this.result.body.id,
         })
         .end((err, res) => {
-          console.log(res.status);
           expect(res).status(202);
           expect(res.body.name).to.equal('GameCube');
           expect(res.body.id).to.equal(this.result.body.id);
+          done();
+        });
+      });
+      it('should respond with a status of 400 on a bad request', done => {
+        chai.request(server)
+        .put('/api/consoles')
+        .send({id: this.result.body.id})
+        .end((err, res) => {
+          expect(res).status(400);
+          expect(res.text).to.equal('bad request');
           done();
         });
       });
@@ -128,6 +147,16 @@ describe('Server module', function() {
         .query({id: this.result.body.id})
         .end((err, res) => {
           expect(res).status(204);
+          done();
+        });
+      });
+      it('should respond with a 404 when an invalid id is used', done => {
+        chai.request(server)
+        .delete('/api/consoles')
+        .query({id: 7})
+        .end((err, res) => {
+          expect(res).status(404);
+          expect(res.notFound).to.be.true;
           done();
         });
       });

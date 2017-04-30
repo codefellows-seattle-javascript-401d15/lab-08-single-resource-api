@@ -14,8 +14,6 @@ exports.createItem = function(schema, item) {
 
   storage[schema][item.id] = item;
 
-  // console.log(item, 'storage log');
-
   Promise.resolve(item);
 };
 
@@ -50,7 +48,7 @@ exports.deleteItem = function(schema, id) {
     if(!item) return reject(new Error('item not found'));
 
     delete storage[schema][id];
-    resolve();
+    return resolve();
   });
 };
 
