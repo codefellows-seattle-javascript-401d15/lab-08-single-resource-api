@@ -25,8 +25,8 @@ storage.createItem = function(blueprint, item) {
 
 storage.fetchItem = function(blueprint, id) {
   debug('#fetchItem');
-
   let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
+
   return fs.statAsync(pathUrlId)
   .catch(err => {
     err.status = 404;
@@ -53,14 +53,12 @@ storage.updateItem = function(blueprint, id) {
     .catch(console.error);
   })
   .catch(console.error);
-
 };
-
 
 storage.deleteItem = function(blueprint, id) {
   debug('#deleteItem');
-
   let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
+
   return fs.statAsync(pathUrlId)
   .catch(err => {
     err.status = 404;
@@ -73,22 +71,3 @@ storage.deleteItem = function(blueprint, id) {
     return Promise.resolve();
   });
 };
-
-
-
-
-// return fs.statProm(`${pathUrl}`)
-// .catch(err => {
-//   err.status = 400;
-//   return Promise.reject(err);
-// }).then(() => {
-//   return fs.readFileProm(pathUrlId)
-// })
-//   .then( () => {
-//     fs.writeFileProm(`${pathUrlId}`, JSON.stringify(item))
-//     .then((item) => {
-//       console.log(item);
-//     })
-//     .catch(console.error)
-//   })
-//   .catch(console.error)
