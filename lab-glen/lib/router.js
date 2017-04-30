@@ -9,7 +9,7 @@ const Router = module.exports = function () {
     GET: {},
     POST: {},
     PUT: {},
-    DELETE: {}
+    DELETE: {},
   };
 };
 
@@ -38,7 +38,7 @@ Router.prototype.route = function() {
   return (req, res) => {
     Promise.all([
       parseUrl(req),
-      parseJson(req)
+      parseJson(req),
     ])
     .then(() => {
       if(typeof this.routes[req.method][req.url.pathname] === 'function') {

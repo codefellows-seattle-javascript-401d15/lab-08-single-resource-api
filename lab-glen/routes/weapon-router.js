@@ -48,7 +48,7 @@ module.exports = function(router) {
   router.delete('/api/weapon', function(req, res) {
     debug('DELETE /api/weapon');
     if(req.url.query.id) {
-      storage.deleteItem('weapo', req.url.query.id)
+      storage.deleteItem('weapon', req.url.query.id)
       .then(() => {
         res.writeHead(404, {'Content-Type': 'application/json'});
         res.write('weapon successfully deleted');
@@ -66,6 +66,31 @@ module.exports = function(router) {
     res.write('bad request haha');
     res.end();
 
+  });
+
+  router.put('/api/weapon', function(req, res) {
+    debug('PUT /api/weapon');
+    let id = req.url.query.id;
+    if(id) {
+      storage.updateItem('weapon', id)
+      .then(weapon => {
+        if(req.body.name) weapon.name = req.body.name;
+        if(req.body.type) weapon.type = req.body.type;
+        res.writeHead(201, {'Content-Type' : 'application/json'});
+        res.write(JSON.stringify(weapon));
+        res.end();
+      })
+      .catch(err => {
+        console.error(err);
+        res.writeHead(404, {'Content-Type' : 'text/plain'});
+        res.write('update item not found');
+        res.end();
+      });
+      return;
+    }
+    res.writeHead(400, {'Content-Type' : 'text/plain'});
+    res.write('bad request haha');
+    res.end();
   });
 
 
