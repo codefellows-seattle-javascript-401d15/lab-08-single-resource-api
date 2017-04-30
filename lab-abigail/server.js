@@ -39,7 +39,7 @@ router.post('/api/food', function(req, res) {
   try {
     let food = new FoodItem(req.body.name, req.body.type, req.body.cost);
     storage.createItem('food', food);
-    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.writeHead(201, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(food));
     res.end();
   } catch(e) {
