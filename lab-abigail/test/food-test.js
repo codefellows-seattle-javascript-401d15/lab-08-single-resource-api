@@ -109,7 +109,7 @@ describe('POST method', function() {
       done();
     });
 
-    describe('put request to render a food item', function() {
+    describe('Verify route status and errors', function () {
       it('should return 200 status on proper request', done => {
         chai.request(server)
         .get(`/api/food?id=${food.id}`)
@@ -120,7 +120,7 @@ describe('POST method', function() {
         });
       });
 
-      it('should return error on a bad request', done => {
+      it('should respond with 404 status if route is not found', done => {
         chai.request(server)
         .get('/api/drinks')
         .end((err, res) => {
@@ -130,8 +130,7 @@ describe('POST method', function() {
         });
       });
 
-
-      it('should return error on a bad request', done => {
+      it('should return an object', done => {
         chai.request(server)
         .get('/api/drinks')
         .end((err, res) => {
@@ -143,7 +142,6 @@ describe('POST method', function() {
     });
   });
 });
-
 
 describe('PUT method', function() {
   let food;
@@ -158,9 +156,9 @@ describe('PUT method', function() {
     done();
   });
 
-  describe('put request to render a food item', function() {
+  describe('Verify route status and errors', function () {
 
-    it('should change the food name and color', done => {
+    it('should change the food name and type', done => {
       chai.request(server)
       .post('/api/food')
       .send({'name': 'banana', 'type': 'yellow'})
@@ -170,7 +168,7 @@ describe('PUT method', function() {
         done();
       });
 
-      it('should return 200 status on proper request', done => {
+      it('should respond with 202 on proper request', done => {
         chai.request(server)
         .put(`/api/food?id=${food.id}`)
         .end((err, res) => {
@@ -180,7 +178,7 @@ describe('PUT method', function() {
         });
       });
 
-      it('should return error on a bad request', done => {
+      it('should respond with 400 if route is not found', done => {
         chai.request(server)
         .put('/api/drinks')
         .end((err, res) => {
@@ -205,8 +203,8 @@ describe('DELETE method', function() {
     done();
   });
 
-  describe('put request to render a food item', function() {
-    it('should return 202 status on proper request', done => {
+  describe('Verify route status and errors', function () {
+    it('should respond with 204 on proper request', done => {
       chai.request(server)
       .delete(`/api/food?id=${food.id}`)
       .end((err, res) => {
@@ -216,7 +214,7 @@ describe('DELETE method', function() {
       });
     });
 
-    it('should return error on a bad request', done => {
+    it('should respond with 404 if route is not found', done => {
       chai.request(server)
       .delete('/api/drinks')
       .end((err, res) => {
@@ -227,7 +225,6 @@ describe('DELETE method', function() {
     });
   });
 });
-
 
 describe('HTTP Server module', function(){
   after(function(done){
