@@ -1,11 +1,11 @@
 'use strict';
 
-const debug = require('debug')('http:parser-json');
+const debug = require('debug')('http:parse-json');
 
 module.exports = function(req) {
   return new Promise((resolve, reject) => {
-    debug('#parser-json');
-    
+    debug('#parse-json');
+
     if(req.method === 'POST' || req.method === 'PUT') {
       let body = '';
 
