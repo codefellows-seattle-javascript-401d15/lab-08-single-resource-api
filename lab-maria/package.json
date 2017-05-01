@@ -1,0 +1,22 @@
+{
+  "name": "lab-maria",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "debug": "DEBUG=http* nodemon server.js"
+  },
+  "author": "maria reed",
+  "license": "MIT",
+  "devDependencies": {
+    "debug": "^2.6.6"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "description": ""
+}
