@@ -33,10 +33,8 @@ router.get('/api/consoles', function(req, res) {
 router.post('/api/consoles', function(req, res) {
   debug('POST /api/consoles');
 
-  // console.log(req);
   let hardware = new Hardware(req.body.name, req.body.manufacturer, req.body.releaseDate);
   try {
-    // console.log(hardware, 'hardware log');
     storage.createItem('consoles', hardware);
     res.writeHead(201, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(hardware));
@@ -55,7 +53,8 @@ router.delete('/api/consoles', function(req, res) {
   if(req.url.query.id) {
     storage.deleteItem('consoles', req.url.query.id)
     .then(() => {
-      res.writeHead(204, {'Content-Type': 'none'});
+      res.writeHead(204, {'Content-Type': 'text/plain'});
+      res.write('item sucessfully deleted');
       res.end();
     })
     .catch(err => {
@@ -82,6 +81,8 @@ router.put('/api/consoles', function(req, res) {
     .catch(err => {
       console.error(err);
       res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.write('bad request');
+      res.end();
     });
   }
 });
