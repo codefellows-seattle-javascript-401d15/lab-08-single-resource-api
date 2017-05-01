@@ -8,7 +8,7 @@ module.exports = exports = {};
 exports.createItem = function(schema, item) {
   debug('#createItem');
 
-  if(!schema) return Promise.reject(new Error('shema required'));
+  if(!schema) return Promise.reject(new Error('schema required'));
   if(!item) return Promise.reject(new Error('item required'));
   if(!storage[schema]) storage[schema] = {};
 
@@ -50,7 +50,7 @@ exports.deleteItem = function(schema, id) {
   });
 };
 
-exports.updateItem = function(schema, id) {
+exports.updateItem = function(schema, id, newName, newType, newColor) {
   debug('#updateItem');
   return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
@@ -59,10 +59,14 @@ exports.updateItem = function(schema, id) {
     let schemaName = storage[schema];
     if(!schemaName) return reject(new Error('schema not found'));
 
+    let dog = schemaName[id];
+    if(!dog) return reject(new Error('item not found'));
     console.log(storage[schema]);
 
-    schemaName.name = 'Jones';
+    if(newName) dog.name = newName;
+    if(newType) dog.type = newType;
+    if(newColor) dog.color = newColor;
 
-    resolve();
+    resolve(dog);
   });
 };
