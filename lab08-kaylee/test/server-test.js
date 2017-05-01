@@ -18,73 +18,169 @@ describe('server module', function() {
   });
 
   describe('GET method', function() {
-    let resource;
+    let getResource;
     before(done => {
       chai.request(server)
-      .post('/api/toy')
-      .send({name: 'music box', type: 'musical', hazard: true})
+      .post('/api/note')
+      .send({name: 'Kaylee', date: 'April 28, 2017'})
       .end((err, res) => {
-        resource = JSON.parse(res.text.toString());
+        getResource = JSON.parse(res.text.toString());
         done();
       });
-      after(done => {
+    });
+    describe('a properly formatted request', function() {
+      it('should return a 200 status code given a valid id', done => {
         chai.request(server)
-        .delete('/api/toy')
-        .query({id: resource.id})
+        .get(`/api/note?id=${getResource.id}`)
         .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(200);
           done();
         });
       });
     });
-    describe('/api/toy route', function() {
+    describe('an improperly formatted request', function() {
+      it('should return a 404 status code given an invalid id', done => {
+        chai.request(server)
+        .get('/api/note?id=badId')
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/note')
+      .query({id: getResource.id})
+      .end(() => {
+        done();
+      });
+    });
+  });
+
+  describe('POST method', function() {
+    let postResource;
+    describe('a properly formatted request', function() {
+      it('should return a 201 status code given a valid body', done => {
+        chai.request(server)
+        .post(`/api/note`)
+        .send({name: 'Kaylee', date: 'April 28, 2017'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(201);
+          done();
+        });
+      });
+    });
+    describe('an improperly formatted request', function() {
+      it('should return a 400 status code if given an invalid body', done => {
+        chai.request(server)
+        .post('/api/note')
+        .send()
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(400);
+          done();
+        });
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/note')
+      .query({id: postResource.id})
+      .end(() => {
+        done();
+      });
+    });
+  });
+
+  describe('PUT method', function() {
+    let putResource;
+    before(done => {
+      chai.request(server)
+      .post('/api/note')
+      .send({name: 'Kaylee', date: 'April 28, 2017'})
+      .end((err, res) => {
+        putResource = JSON.parse(res.text.toString());
+        done();
+      });
       describe('a properly formatted request', function() {
-        it('should return a resource given proper id', done => {
+        it('should return a 202 status code given a valid id', done => {
           chai.request(server)
-          .get(`/api/toy?id=${resource.id}`)
+          .post(`/api/note?id=${putResource.id}`)
+          .send({name: 'Kaylee', date: 'April 28, 2017'})
           .end((err, res) => {
-            let expected = JSON.parse(res.text.toString());
-            expect(resource).to.deep.equal(expected);
+            if(err) console.error(err);
+            expect(res.status).to.equal(202);
             done();
           });
         });
       });
       describe('an improperly formatted request', function() {
-
+        it('should return a 400 status code if given an invalid id', done => {
+          chai.request(server)
+          .post('/api/note?id=badId')
+          .send({name: 'Kaylee', date: 'April 28, 2017'})
+          .end((err, res) => {
+            if(err) console.error(err);
+            expect(res.status).to.equal(400);
+            done();
+          });
+        });
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/note')
+      .query({id: putResource.id})
+      .end(() => {
+        done();
       });
     });
 
-    describe('unregistered route', function() {
-
-    });
-  });
-
-  describe('POST method', function() {
-    describe('/api/toy route', function() {
-
-    });
-
-    describe('unregistered route', function() {
-
-    });
-  });
-
-  describe('PUT method', function() {
-    describe('/api/toy route', function() {
-
-    });
-
-    describe('unregistered route', function() {
-
-    });
-  });
-
-  describe('DELETE method', function() {
-    describe('/api/toy route', function() {
-
-    });
-
-    describe('unregistered route', function() {
-
+    describe('DELETE method', function() {
+      let deleteResource;
+      before(done => {
+        chai.request(server)
+        .post('/api/note')
+        .send({name: 'Kaylee', date: 'April 28, 2017'})
+        .end((err, res) => {
+          deleteResource = JSON.parse(res.text.toString());
+          done();
+        });
+      });
+      describe('a properly formatted request', function() {
+        it('should return a 204 status code given a proper id', done => {
+          chai.request(server)
+          .delete(`/api/note?id=${deleteResource.id}`)
+          .end((err, res) => {
+            if(err) console.error(err);
+            expect(res.status).to.equal(204);
+            done();
+          });
+        });
+      });
+      describe('an improperly formatted request', function() {
+        it('should return a 404 status code given an invalid id', done => {
+          chai.request(server)
+          .delete('/api/note?id=badId')
+          .end((err, res) => {
+            if(err) console.error(err);
+            expect(res.status).to.equal(404);
+            done();
+          });
+        });
+      });
+      after(done => {
+        chai.request(server)
+        .delete('/api/note')
+        .query({id: deleteResource.id})
+        .end(() => {
+          done();
+        });
+      });
     });
   });
 });
