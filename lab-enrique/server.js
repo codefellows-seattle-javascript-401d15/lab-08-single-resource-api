@@ -75,15 +75,15 @@ router.delete('/api/doge', function(req, res) {
 router.put('/api/doge', function(req, res) {
   debug('PUT /api/doge');
   if(req.url.query.id) {
-    storage.updateItem('doge', req.url.query.id)
+    storage.updateItem('doge', req.url.query.id, req.body.name, req.body.type, req.body.color)
     .then(doge => {
-      res.writeHead(204, {'Content-Type': 'application/json'});
+      res.writeHead(202, {'Content-Type': 'application/json'});
       res.end();
     })
     .catch(err => {
       console.error(err);
-      res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.write('not found');
+      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.write('bad request');
       res.end();
     });
     return;
