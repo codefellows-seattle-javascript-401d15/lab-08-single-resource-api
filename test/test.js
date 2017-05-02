@@ -16,9 +16,7 @@ describe('ninja module', function(){
   });
   it('should have a unique uuid value', done => {
     let pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
-    expect(newNinja.id).to.equal(pattern);
+    expect(newNinja.id).to.match(pattern);
     done();
   });
 });
-
-//the pattern is the section, number of values in each section 0-9a-f shows its in hex

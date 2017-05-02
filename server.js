@@ -53,12 +53,12 @@ router.delete('/api/ninja', function(req, res) {
   console.log(req.body);
   try {
     storage.removeItem(Ninjas);
-    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.writeHead(204, {'Content-Type': 'text/plain'});
     res.write('Ninja killed.');
     res.end();
   } catch (e){
     console.error(e);
-    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.writeHead(404, {'Content-Type': 'text/plain'});
     res.write('could not delete your stupid fucking ninja');
     res.end();
   }
@@ -75,7 +75,7 @@ router.put('/api/ninja', function(req, res) {
   })
   .catch(err => {
     console.error(err);
-    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.writeHead(400, {'Content-Type': 'text/plain'});
     res.write('not found');
     res.end();
   });
