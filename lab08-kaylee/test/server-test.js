@@ -22,7 +22,7 @@ describe('server module', function() {
     before(done => {
       chai.request(server)
       .post('/api/note')
-      .send({name: 'Kaylee', date: 'April 28, 2017'})
+      .send({name: 'Kaylee', date: 'April 15, 2017'})
       .end((err, res) => {
         getResource = JSON.parse(res.text.toString());
         done();
@@ -61,12 +61,11 @@ describe('server module', function() {
   });
 
   describe('POST method', function() {
-    let postResource;
     describe('a properly formatted request', function() {
       it('should return a 201 status code given a valid body', done => {
         chai.request(server)
         .post(`/api/note`)
-        .send({name: 'Kaylee', date: 'April 28, 2017'})
+        .send({name: 'Kaylee', date: 'April 16, 2017'})
         .end((err, res) => {
           if(err) console.error(err);
           expect(res.status).to.equal(201);
@@ -75,7 +74,7 @@ describe('server module', function() {
       });
     });
     describe('an improperly formatted request', function() {
-      it('should return a 400 status code if given an invalid body', done => {
+      it('should return a 400 status code if given an invalid body or no body provided', done => {
         chai.request(server)
         .post('/api/note')
         .send()
@@ -86,14 +85,6 @@ describe('server module', function() {
         });
       });
     });
-    after(done => {
-      chai.request(server)
-      .delete('/api/note')
-      .query({id: postResource.id})
-      .end(() => {
-        done();
-      });
-    });
   });
 
   describe('PUT method', function() {
@@ -101,34 +92,10 @@ describe('server module', function() {
     before(done => {
       chai.request(server)
       .post('/api/note')
-      .send({name: 'Kaylee', date: 'April 28, 2017'})
+      .send({name: 'Kaylee', date: 'April 17, 2017'})
       .end((err, res) => {
         putResource = JSON.parse(res.text.toString());
         done();
-      });
-      describe('a properly formatted request', function() {
-        it('should return a 202 status code given a valid id', done => {
-          chai.request(server)
-          .post(`/api/note?id=${putResource.id}`)
-          .send({name: 'Kaylee', date: 'April 28, 2017'})
-          .end((err, res) => {
-            if(err) console.error(err);
-            expect(res.status).to.equal(202);
-            done();
-          });
-        });
-      });
-      describe('an improperly formatted request', function() {
-        it('should return a 400 status code if given an invalid id', done => {
-          chai.request(server)
-          .post('/api/note?id=badId')
-          .send({name: 'Kaylee', date: 'April 28, 2017'})
-          .end((err, res) => {
-            if(err) console.error(err);
-            expect(res.status).to.equal(400);
-            done();
-          });
-        });
       });
     });
     after(done => {
@@ -139,47 +106,72 @@ describe('server module', function() {
         done();
       });
     });
-
-    describe('DELETE method', function() {
-      let deleteResource;
-      before(done => {
+    describe('a properly formatted request', function() {
+      it('should return a 202 status code given a valid id', done => {
         chai.request(server)
-        .post('/api/note')
-        .send({name: 'Kaylee', date: 'April 28, 2017'})
+        .put(`/api/note?id=${putResource.id}`)
+        .send({name: 'Kaylee', date: 'April 18, 2017'})
         .end((err, res) => {
-          deleteResource = JSON.parse(res.text.toString());
+          if(err) console.error(err);
+          expect(res.status).to.equal(202);
           done();
         });
       });
-      describe('a properly formatted request', function() {
-        it('should return a 204 status code given a proper id', done => {
-          chai.request(server)
-          .delete(`/api/note?id=${deleteResource.id}`)
-          .end((err, res) => {
-            if(err) console.error(err);
-            expect(res.status).to.equal(204);
-            done();
-          });
+    });
+    describe('an improperly formatted request', function() {
+      it('should return a 400 status code if given an invalid body or no body provided', done => {
+        chai.request(server)
+        .get('/api/note')
+        .send({})
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(400);
+          done();
         });
       });
-      describe('an improperly formatted request', function() {
-        it('should return a 404 status code given an invalid id', done => {
-          chai.request(server)
-          .delete('/api/note?id=badId')
-          .end((err, res) => {
-            if(err) console.error(err);
-            expect(res.status).to.equal(404);
-            done();
-          });
-        });
+    });
+  });
+
+  describe('DELETE method', function() {
+    let deleteResource;
+    before(done => {
+      chai.request(server)
+      .post('/api/note')
+      .send({name: 'Kaylee', date: 'April 20, 2017'})
+      .end((err, res) => {
+        deleteResource = JSON.parse(res.text.toString());
+        done();
       });
-      after(done => {
+    });
+    describe('a properly formatted request', function() {
+      it('should return a 204 status code given a proper id', done => {
         chai.request(server)
         .delete('/api/note')
         .query({id: deleteResource.id})
-        .end(() => {
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(204);
           done();
         });
+      });
+    });
+    describe('an improperly formatted request', function() {
+      it('should return a 404 status code given an invalid id', done => {
+        chai.request(server)
+        .get('/api/note?id=badId')
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/note')
+      .query({id: deleteResource.id})
+      .end(() => {
+        done();
       });
     });
   });
