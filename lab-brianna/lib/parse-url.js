@@ -1,5 +1,6 @@
 'use strict';
 
+//requiring the debug
 const debug = require('debug')('http:parse-url');
 const parseUrl = require('url').parse;
 const parseQuery = require('querystring').parse;

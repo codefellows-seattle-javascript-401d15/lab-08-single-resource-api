@@ -38,6 +38,8 @@ router.post('/api/watch', function(req, res) {
   try {
     let watch = new Watch(req.body.brand, req.body.color, req.body.size);
     storage.createItem('watch', watch);
+
+    //.then should go here
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(watch));
     res.end();
@@ -50,8 +52,47 @@ router.post('/api/watch', function(req, res) {
 });
 
 router.put('/api/watch', function(req, res) {
-  debug('PUT /api/watch')
-  if(req.url.query.id)
+  debug('PUT /api/watch');
+  if(req.body) {
+    storage.updateItem('watch', req.body)
+    .then(watch => {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(JSON.stringify(watch));
+      res.end();
+    })
+    .catch(err => {
+      console.error(err);
+      res.writeHead(404, {'Content-Type': 'text/plain'});
+      res.write('not found');
+      res.end();
+    });
+    return;
+  }
+  res.writeHead(400, {'Content-Type': 'text/plain'});
+  res.write('bad request');
+  res.end();
+});
+
+router.delete('/api/watch', function(req, res) {
+  debug('DELETE /api/watch');
+  if (req.url.query.id) {
+    storage.deleteItem('watch', req.url.query.id)
+    .then(() => {
+      res.writeHead(204, {'Content-Type': 'application/json'});
+      res.write('delete successful');
+      res.end();
+    })
+    .catch(err => {
+      console.error(err);
+      res.writeHead(404, {'Content-Type': 'text/plain'});
+      res.write('not found');
+      res.end();
+    });
+    return;
+  }
+  res.write(400, {'Content-Type': 'text/plain'});
+  res.write('bad reqest');
+  res.end();
 });
 
 server.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
