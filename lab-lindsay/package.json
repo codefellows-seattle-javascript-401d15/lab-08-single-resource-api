@@ -7,7 +7,9 @@
     "test": "test"
   },
   "dependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
     "bluebird": "^3.5.0",
@@ -19,7 +21,10 @@
     "uuid": "^3.0.1"
   },
   "scripts": {
-    "test": "chai"
+    "test": "mocha",
+    "start": "nodemon server.js",
+    "watch": "nodemon server.js",
+    "debug": "DEBUG=http* nodemon server.js"
   },
   "repository": {
     "type": "git",

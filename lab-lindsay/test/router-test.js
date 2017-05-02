@@ -16,7 +16,7 @@ describe('Server function check', function() {
   describe('POST method', function() {
     describe('/api/candy endpoint', function() {
       it('should respond with a 400 on bad request', done => {
-        chai.request(server);
+        chai.request(server)
         .post('/wrong')
         .send({})
         .end((err, res) => {
@@ -176,4 +176,5 @@ describe('Server function check', function() {
   after(done => {
     server.close();
     done();
-})
+  });
+});

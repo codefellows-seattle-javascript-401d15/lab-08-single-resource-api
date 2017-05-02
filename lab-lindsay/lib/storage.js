@@ -10,18 +10,17 @@ const pathUrl = `${__dirname}/../data`;
 storage.createItem = function(blueprint, item) {
   debug('#createItem');
 
-  return fs.statAsync(`${pathUrl}`);
+  return fs.statAsync(`${pathUrl}`)
   .catch(err => {
     err.status = 400;
     return Promise.reject(err);
   })
-  .then(() =>
-    return fs.writeFileAsync(`${pathUrl}/${blueprint}${item.id}.json`,
-    JSON.stringify(item));
+  .then(() => {
+    return fs.writeFileAsync(`${pathUrl}/${blueprint}${item.id}.json`, JSON.stringify(item));
   })
   .then(() => {
     return Promise.resolve(item);
-  });
+  })
 };
 
 storage.fetchItem = function(blueprint, id) {
@@ -58,7 +57,7 @@ storage.removeItem = function(blueprint, id) {
   });
 };
 
-storage.updateItem = function(blueprint, id) {
+storage.updateItem = function(blueprint, id, item) {
   debug('#updateItem');
   let pathUrlId = `${pathUrl}/${blueprint}${id}.json`;
 
@@ -67,5 +66,4 @@ storage.updateItem = function(blueprint, id) {
     console.log(item);
   })
   .catch(console.error);
-  });
 };

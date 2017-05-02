@@ -14,7 +14,7 @@ module.exports = function(router) {
         res.writeHead(201, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(candy));
         res.end();
-      });
+      })
       .catch(err => {
         console.error(err);
         res.writeHead(404, {'Content-Type' : 'text/plain'});
