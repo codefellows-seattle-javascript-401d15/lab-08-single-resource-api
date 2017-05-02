@@ -10,7 +10,7 @@ describe('GET method', function() {
   before(done => {
     chai.request(server)
     .post('/api/watch')
-    .send({brand: '', color: '', size: ''})
+    .send({brand: 'test', color: 'test', size: 'test'})
     .end((err, res) => {
       resource = JSON.parse(res.text.toString());
       done();
@@ -28,7 +28,7 @@ describe('GET method', function() {
     describe('a properly formatted request', function() {
       it('should return a resource proper id', done => {
         chai.request(server)
-        .get('/api/')
+        .get('/api/');
       });
     });
   });
