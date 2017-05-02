@@ -1,0 +1,30 @@
+{
+  "name": "lab-kayla",
+  "version": "1.0.0",
+  "description": "single source api",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "debug": "DEBUG=http* nodemon server.js"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.4",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
+}
