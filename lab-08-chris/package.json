@@ -5,13 +5,14 @@
   "main": "server.js",
   "directories": {
     "test": "test",
-    "lint": "eslint ./"
+    "lint": "eslint /"
   },
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "debug": "DEBUG=http* nodemon server.js"
+    "debug": "DEBUG=http* nodemon server.js",
+    "lint": "eslint ./"
   },
   "keywords": [],
   "author": "Chris",
