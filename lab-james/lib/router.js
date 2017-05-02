@@ -36,8 +36,8 @@ Router.prototype.route = function() {
       parseUrl(req),
     ])
     .then(() => {
-      if(typeof this.routes[req.method][req.url.pathname]) === 'function') {
-        this.routes[req.method][req.url.pathname](req, res)
+      if(typeof this.routes[req.method][req.url.pathname] === 'function') {
+        this.routes[req.method][req.url.pathname](req, res);
         return;
       }
       res.writeHead(404, {'Content-type': 'text/plain'});
@@ -48,6 +48,6 @@ Router.prototype.route = function() {
       res.writeHead(400, {'Content-type': 'text/plain'});
       res.write('Bad request');
       res.end();
-    })
+    });
   };
 };

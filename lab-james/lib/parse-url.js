@@ -2,7 +2,7 @@
 
 const debug = require('debug')('http:parse-url');
 const parseUrl = require('url').parse;
-const parseQuery = require('queryString').parse;
+const parseQuery = require('querystring').parse;
 
 module.exports = function(req) {
   debug('#parse-url');
