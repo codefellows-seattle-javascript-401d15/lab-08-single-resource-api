@@ -12,7 +12,7 @@ exports.createItem = (schema, item) => {
   if(!item) return Promise.reject(new Error('item required'));
   if(!storage[schema]) storage[schema] = {};
 
-  storage[schema][item.idea] = item;
+  storage[schema][item.id] = item;
 
   return Promise.resolve(item);
 };
@@ -47,13 +47,20 @@ exports.fetchAll = (schema) => {
   });
 };
 
-// exports.deleteItem = (schema) => {
-//   debug('#deleteItem')
-//
-//   return new Promise((resolve, reject) => {
-//     if(!schema) return reject(new Error('schema required'));
-//     if(!id) return reject(new Error('id required'));
-//
-//
-//   })
-// }
+exports.deleteItem = function(schema, id) {
+  debug('#deleteItem');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('shema required'));
+    if(!id) return reject(new Error('id required'));
+
+    let schemaName = storage[schema];
+    if(!schemaName) return reject(new Error('schema not found'));
+
+    let item = schemaName[id];
+    if(!item) return reject(new Error('item not found'));
+
+    delete(schemaName[id]);
+    resolve(item);
+  });
+};

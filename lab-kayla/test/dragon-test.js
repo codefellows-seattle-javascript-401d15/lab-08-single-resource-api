@@ -1,4 +1,4 @@
-'use strict'; //test constructor, route methods
+'use strict';
 
 const Dragon = require('../model/killer-dragon');
 const chai = require('chai');

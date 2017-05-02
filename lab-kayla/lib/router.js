@@ -14,22 +14,23 @@ const Router = module.exports = function() {
   };
 };
 
-Router.prototype.get = (endpoint, callback) => {
+Router.prototype.get = function(endpoint, callback){
   debug('#GET');
   this.routes.GET[endpoint] = callback;
 };
 
-Router.prototype.post = (endpoint, callback) => {
+
+Router.prototype.post = function(endpoint, callback){
   debug('#POST');
   this.routes.POST[endpoint] = callback;
 };
 
-Router.prototype.put = (endpoint, callback) => {
+Router.prototype.put = function(endpoint, callback){
   debug('#PUT');
   this.routes.PUT[endpoint] = callback;
 };
 
-Router.prototype.delete = (endpoint, callback) => {
+Router.prototype.delete = function(endpoint, callback){
   debug('#DELETE');
   this.routes.DELETE[endpoint] = callback;
 };
