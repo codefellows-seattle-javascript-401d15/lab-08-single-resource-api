@@ -13,7 +13,7 @@ const server = module.exports = http.createServer(router.route());
 router.get('/api/note', function(req, res) {
   debug('GET /api/note');
   if(req.url.query.id) {
-    storage.fetchItem('note', req.url.query.id)
+    storage.fetchNote('note', req.url.query.id)
     .then(note => {
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(note));
@@ -35,7 +35,6 @@ router.get('/api/note', function(req, res) {
 
 router.post('/api/note', function(req, res) {
   debug('POST /api/note');
-  console.log(req.body, 'req.body post');
   try {
     let note = new Note(req.body.name, req.body.date);
     storage.createNote('note', note)
@@ -54,7 +53,6 @@ router.post('/api/note', function(req, res) {
 
 router.put('/api/note', function(req, res) {
   debug('PUT /api/note');
-  console.log(req.body, 'req.body put');
   try {
     let note = new Note(req.body.name, req.body.date);
     storage.updateNote('note', note);
@@ -71,9 +69,8 @@ router.put('/api/note', function(req, res) {
 
 router.delete('/api/note', function(req, res) {
   debug('DELETE /api/note');
-  console.log(req.body, 'req.body delete');
   try {
-    storage.deleteNote('note', req.body.id);
+    storage.deleteNote('note', req.url.query.id);
     res.writeHead(204, {'Content-Type': 'application/json'});
     res.write('note deleted');
     res.end();
