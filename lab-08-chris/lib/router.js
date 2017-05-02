@@ -5,7 +5,7 @@ const parseUrl = require('./parse-url');
 const debug = require('debug')('http:router');
 
 const Router = module.exports = function() {
-  debug('#Router');
+  debug('Router()');
   this.routes = {
     GET: {},
     POST: {},
@@ -21,7 +21,7 @@ const Router = module.exports = function() {
 });
 
 Router.prototype.route = function() {
-  debug('#routes');
+  debug('routes()');
   return (req, res) => {
     Promise.all([
       parseUrl(req),
@@ -33,7 +33,7 @@ Router.prototype.route = function() {
         return;
       }
 
-      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('route not found');
       res.end();
     })
@@ -44,3 +44,23 @@ Router.prototype.route = function() {
     });
   };
 };
+
+// Router.prototype.get = function(endpoint, callback) {
+//   debug('#GET');
+//   this.routes.GET[endpoint] = callback;
+// };
+//
+// Router.prototype.post = function(endpoint, callback) {
+//   debug('#POST');
+//   this.routes.POST[endpoint] = callback;
+// };
+//
+// Router.prototype.put = function(endpoint, callback) {
+//   debug('#PUT');
+//   this.routes.PUT[endpoint] = callback;
+// };
+//
+// Router.prototype.delete = function(endpoint, callback) {
+//   debug('#DELETE');
+//   this.routes.DELETE[endpoint] = callback;
+// };

@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "lint": "eslint ./"
   },
   "scripts": {
     "test": "mocha",
@@ -22,7 +23,6 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "debug": "^2.6.4",
-    "mocha": "^3.3.0",
-    "superagent": "^3.5.2"
+    "mocha": "^3.3.0"
   }
 }

@@ -34,7 +34,7 @@ exports.fetchItem = function(schema, id) {
   });
 };
 
-exports.updateItem = function(schema, id, newTitle, newArtist, newAlbum) {
+exports.updateItem = function(schema, id, newSong) {
   debug('updateItem()');
   return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('schema required'));
@@ -46,9 +46,9 @@ exports.updateItem = function(schema, id, newTitle, newArtist, newAlbum) {
     let item = schemaName[id];
     if(!item) return reject(new Error('item not found'));
 
-    if(newTitle) item.title = newTitle;
-    if(newArtist) item.artist = newArtist;
-    if(newAlbum) item.album = newAlbum;
+    if(newSong.title) item.title = newSong.title;
+    if(newSong.artist) item.artist = newSong.artist;
+    if(newSong.album) item.album = newSong.album;
 
     resolve(item);
   });
@@ -69,6 +69,6 @@ exports.deleteItem = function(schema, id) {
 
     delete storage[schema][id];
 
-    resolve(item);
+    resolve();
   });
 };
