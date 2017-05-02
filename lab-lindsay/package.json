@@ -10,8 +10,10 @@
     "chai": "^3.5.0"
   },
   "devDependencies": {
+    "bluebird": "^3.5.0",
     "chai": "^3.5.0",
-    "debug": "^2.6.5",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.6",
     "mocha": "^3.3.0",
     "superagent": "^3.5.2",
     "uuid": "^3.0.1"
