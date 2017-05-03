@@ -5,19 +5,19 @@ const storage = {};
 
 module.exports = exports = {};
 
-exports.createItem = (schema, item) => {
-  debug('#createItem');
+exports.createItem = function(schema, item) {
+  debug('#createItem')
 
-  if(!schema) return Promise.reject(new Error('schema required'));
-  if(!item) return Promise.reject(new Error('item required'));
+  if(!schema) return Promise.reject(new Error('schema required'))
+  if(!item) return Promise.reject(new Error('item required'))
   if(!storage[schema]) storage[schema] = {};
 
-  storage[schema][item.id] = item;
+  storage[schema][item.id] = item
 
-  return Promise.resolve(item);
+  return Promise.resolve(item)
 };
 
-exports.fetchItem = (schema, id) => {
+exports.fetchItem = function(schema, id) {
   debug('#fetchItem');
 
   return new Promise((resolve, reject) => {

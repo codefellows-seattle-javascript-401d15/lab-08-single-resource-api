@@ -13,6 +13,7 @@ module.exports = function(req) {
       req.on('end', () => {
         try{
           req.body = JSON.parse(body);
+          console.log('in parse json', req.body);
           resolve(req);
         } catch(e) {
           console.error(e);
