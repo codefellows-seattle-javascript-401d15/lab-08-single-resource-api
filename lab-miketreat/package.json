@@ -1,0 +1,29 @@
+{
+  "name": "lab-miketreat",
+  "version": "1.0.0",
+  "description": "lab8 restful vanilla api",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "PROMISES",
+    "woohoo"
+  ],
+  "author": "MikeTreat",
+  "license": "MIT",
+  "dependencies": {
+    "node-uuid": "^1.4.8"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.6",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
+  }
+}
