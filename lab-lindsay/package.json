@@ -1,0 +1,42 @@
+{
+  "name": "lab-08-lindsay",
+  "version": "1.0.0",
+  "description": "lab-08-promises lab",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "uuid-v4": "^0.1.0"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "debug": "^2.6.6",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2",
+    "uuid": "^3.0.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js",
+    "watch": "nodemon server.js",
+    "debug": "DEBUG=http* nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lindsgil/lab-08-single-resource-api.git"
+  },
+  "keywords": [
+    "lab-08-lindsay"
+  ],
+  "author": "lindsay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lindsgil/lab-08-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/lindsgil/lab-08-single-resource-api#readme"
+}
