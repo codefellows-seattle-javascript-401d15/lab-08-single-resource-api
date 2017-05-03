@@ -1,28 +1,8 @@
 'use strict';
-const auto = require('../model/model');
 const expect = require('chai').expect;
-const server = require('../server.js');
+const server = require('../server');
 const chai = require('chai');
 const http = require('chai-http');
-
-describe('Automobile module', function() {
-  it('should create a new Automobile object with name: Mazda', done => {
-    let newAuto = new auto('Mazda', 'RX-7');
-    expect(newAuto.name).to.equal('Mazda');
-    done();
-  });
-  it('should create a new Automobile object with car: RX-7', done => {
-    let newAuto = new auto('Mazda', 'RX-7');
-    expect(newAuto.car).to.equal('RX-7');
-    done();
-  });
-  it('should have an id of a unique uuid value', done => {
-    let newAuto = new auto('Mazda', 'RX-7');
-    let pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
-    expect(newAuto.id).to.match(pattern);
-    done();
-  });
-});
 
 chai.use(http);
 
@@ -45,38 +25,191 @@ describe('server module', function() {
         .send({name: 'Mazda', car: 'RX-7'})
         .end((err, res) => {
           resource = JSON.parse(res.text.toString());
-          done();
+        });
+        done();
+      });
+      after(done => {
+        server.close();
+        done();
+      });
+
+      describe('A car model should be returned', function() {
+        it('should return the car from its id', done => {
+          chai.request(server)
+          .get(`/api/auto?id=${resource.id}`)
+          .end((err, res) => {
+            if(err) console.error(err);
+            let car = JSON.parse(res.text.toString());
+            expect(resource).to.deep.equal(car);
+            done();
+          });
+        });
+        it('should return a status code of 200 on good request', function() {
+          chai.request(server)
+          .get(`api/auto?id=${resource.id}`)
+          .end((err, res) => {
+            if(err) console.error(err);
+            expect(res.status).to.equal(200);
+          });
+        });
+        it('should return a status code of 404 on bad request', function() {
+          chai.request(server)
+          .get('api/wrong')
+          .end((err, res) => {
+            if(err) console.error(err);
+            expect(res.status).to.equal(404);
+          });
         });
       });
+
       after(done => {
         chai.request(server)
         .delete('/api/auto')
         .query({id: resource.id})
         .end((err, res) => {
+          console.log(res);
           done();
         });
       });
     });
   });
-});
 
-// describe('GET method', function() {
-//     let resource
-//     before(done => {
-//       chai.request(server)
-//       .post('/api/toy')
-//       .send({name: 'music box', type: 'musical', hazard: true})
-//       .end((err, res) => {
-//         resource = JSON.parse(res.text.toString())
-//         done()
-//       })
-//     })
-//     after(done => {
-//       chai.request(server)
-//       .delete('/api/toy')
-//       .query({id: resource.id})
-//       .end((err, res) => {
-//         done()
-//       })
-//
-//     })
+  describe('POST method', function() {
+    describe('a new instance of Automobile', function() {
+      it('should create a new Automobile name value', done => {
+        chai.request(server)
+        .post('/api/auto')
+        .send({'name': 'Mazda', 'car':'RX-7'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          console.log('res.body', res.body);
+          expect(res.body.name).to.equal('Mazda');
+          done();
+        });
+      });
+      it('should create a new Automobile car value', done => {
+        chai.request(server)
+        .post('/api/auto')
+        .send({'name': 'Mazda', 'car': 'RX-7'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          console.log('res.body', res.body);
+          expect(res.body.car).to.equal('RX-7');
+          done();
+        });
+      });
+      it('should return a status code of 201 on good request', done => {
+        chai.request(server)
+        .post('/api/auto')
+        .send({'name': 'Mazda', 'car': 'RX-7'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          console.log('res.body', res.body);
+          expect(res.status).to.equal(201);
+          done();
+        });
+      });
+      it('should return a status code of 400 on bad request', done => {
+        chai.request(server)
+        .post('/api/stuff')
+        .send({'name': 'Mazda', 'car': 'RX-7'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          console.log('res.body', res.body);
+          expect(res.status).to.equal(400);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('DELETE method', function() {
+    let testCar;
+    before(done => {
+      chai.request(server)
+      .post('/api/auto')
+      .send({'name': 'Mazda', 'car': 'RX-7'})
+      .end((err,res) => {
+        if(err) console.log(err);
+        testCar = JSON.parse(res.text.toString());
+        done();
+      });
+    });
+    it('should return a status code of 200 on good request', done => {
+      chai.request(server)
+      .get(`/api/auto?id=${testCar.id}`)
+      .send({})
+      .end((err, res) => {
+        if(err) console.error(err);
+        console.log('res.body', res.body);
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+    it('should return a status code of 400 on bad request', done => {
+      chai.request(server)
+      .get('/api/stuff')
+      .send({})
+      .end((err, res) => {
+        if(err) console.error(err);
+        console.log('res.body', res.body);
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/auto')
+      .query({id: testCar.id})
+      .end((err, res) => {
+        console.error(err);
+        console.log(res);
+        done();
+      });
+    });
+  });
+  describe('PUT method', function () {
+    let testCar;
+    before(done => {
+      chai.request(server)
+      .post('/api/auto')
+      .send({name: 'Mazda', car: 'RX-7'})
+      .end((err, res) => {
+        testCar = JSON.parse(res.text.toString());
+        done();
+      });
+    });
+    it('should return a status code of 200 on good request', done => {
+      chai.request(server)
+      .get(`/api/auto?id=${testCar.id}`)
+      .send({})
+      .end((err, res) => {
+        if(err) console.error(err);
+        console.log('res.body', res.body);
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+    it('should return a status code of 400 on bad request', done => {
+      chai.request(server)
+      .post('/api/stuff')
+      .send({})
+      .end((err, res) => {
+        if(err) console.error(err);
+        console.log('res.body', res.body);
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+    after(done => {
+      chai.request(server)
+      .delete('/api/auto')
+      .query({id: testCar.id})
+      .end((err, res) => {
+        console.error(err);
+        console.log(res);
+        done();
+      });
+    });
+  });
+});
