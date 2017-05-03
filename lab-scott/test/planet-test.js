@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 describe('planet module', function(){
   describe('When creating a new object', function(){
     let newPlanet = new Planet('Hoth', 'starwars');
-    it('should creat a new planet object with name: "Hoth"', done => {
+    it('should create a new planet object with name: "Hoth"', done => {
       expect(newPlanet.name).to.equal('Hoth');
       done();
     });

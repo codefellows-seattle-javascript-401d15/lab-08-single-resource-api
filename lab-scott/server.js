@@ -39,13 +39,13 @@ router.get('/api/planet', function(req,res){
 
 router.post('/api/planet', function(req, res) {
   debug('POST /api/planet');
-  console.log(req.body);
+  // console.log(req.body);
   try {
     let planet = new Planet(req.body.name, req.body.universe);
     storage.createItem('planet', planet);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(planet));
-    console.log(JSON.stringify(planet));
+    // console.log(JSON.stringify(planet));
     res.end();
   } catch(err) {
     console.error(err);
@@ -57,7 +57,7 @@ router.post('/api/planet', function(req, res) {
 
 router.put('/api/planet', function(req,res){
   debug('PUT /api/planet');
-  console.log(req.body);
+  // console.log(req.body);
   if(req.url.query.id){
     storage.fetchItem('planet', req.url.query.id)
       .then(planet => {
