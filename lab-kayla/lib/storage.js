@@ -1,4 +1,4 @@
-'use strict'; //schema = a dragon object
+'use strict';
 
 const debug = require('debug')('http:storage');
 const storage = {};
