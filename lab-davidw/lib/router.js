@@ -39,7 +39,7 @@ Router.prototype.route = function() {
   return (req, res) => {
     Promise.all([
       parseUrl(req),
-      parseJson(res),
+      parseJson(req),
     ])
     .then(() => {
       if(typeof this.routes[req.method][req.url.pathname] === 'function') {
@@ -51,8 +51,8 @@ Router.prototype.route = function() {
       res.write('route not found');
       res.end();
     })
-    .catch(e => {
-      console.error(e);
+    .catch(err => {
+      if (err) console.error(err);
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write('bad request');
       res.end();

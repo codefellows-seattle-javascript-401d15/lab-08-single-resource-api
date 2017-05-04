@@ -7,6 +7,7 @@ module.exports = exports = {};
 
 exports.createItem = function(schema, item) {
   debug('#createItem /api/lure');
+  console.log('My Storage is: ', storage);
 
   if(!schema) return Promise.reject(new Error('schema required'));
   if(!item) return Promise.reject(new Error('item required'));
