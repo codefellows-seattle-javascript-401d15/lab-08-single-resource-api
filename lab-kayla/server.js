@@ -34,14 +34,14 @@ router.get('/api/dragon', function(req, res) {
 
 router.post('/api/dragon', function(req, res) {
   debug('POST /api/dragon')
-  console.log(req.body)
+  console.log('post route', req.body)
   try {
     let dragon = new KillerDragon(req.body.name, req.body.type, req.body.hazard)
     storage.createItem('dragon', dragon)
     .then(newDragon => {
       console.log(newDragon);
       res.writeHead(200, {'Content-Type': 'application/json'})
-      res.write('bad request')
+      res.write(JSON.stringify(newDragon))
       res.end()
     })
   } catch(e) {

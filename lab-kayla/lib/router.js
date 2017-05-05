@@ -44,7 +44,7 @@ Router.prototype.route = function () {
     ])
     .then(() => {
       if(typeof this.routes[req.method][req.url.pathname] === 'function') {
-        this.routes[req.method][req.url.pathname](req, res);
+        this.routes[req.method][req.url.pathname](req, res)
         return
       }
       res.writeHead(404, {'Content-Type': 'text/plain'})
