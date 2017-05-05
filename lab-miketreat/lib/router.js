@@ -4,7 +4,7 @@ const parseJson = require('./parse-json');
 const parseUrl = require('./parse-url');
 const debug = require('debug')('http:router');
 
-const Router = module.exports = () => {
+const Router = module.exports = function(){
   debug('#Router');
 
   this.routes = {
@@ -15,31 +15,31 @@ const Router = module.exports = () => {
   };
 };
 
-Router.prototype.get = (endpoint, callback) => {
+Router.prototype.get = function(endpoint, callback){
   debug('#GET');
-
   this.routes.GET[endpoint] = callback;
+  console.log(this.routes.GET[endpoint]);
 };
 
-Router.prototype.post = (endpoint, callback) => {
+Router.prototype.post = function(endpoint, callback){
   debug('#POST');
 
   this.routes.POST[endpoint] = callback;
 };
 
-Router.prototype.put = (endpoint, callback) => {
+Router.prototype.put = function(endpoint, callback){
   debug('#PUT');
 
   this.routes.PUT[endpoint] = callback;
 };
 
-Router.prototype.delete = (endpoint, callback) => {
+Router.prototype.delete = function(endpoint, callback){
   debug('#DELETE');
 
   this.routes.DELETE[endpoint] = callback;
 };
 
-Router.prototype.route = () => {
+Router.prototype.route = function(){
   debug('#routes');
 
   return (req, res) => {
