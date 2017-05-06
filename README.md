@@ -1,5 +1,5 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) lab-08-single-resource-api
-=====
+
 
 # To Submit this Assignment
   * fork this repository
@@ -52,11 +52,11 @@
   * `GET` - test 200, response body like `{<data>}` for a request made with a valid id
   * `POST` - test 400, responds with 'bad request' for if no `body provided` or `invalid body`
 
-  * `POST` - test 200, response body like  `{<data>}` for a post request with a valid body
+  * `POST` - test 201, response body like  `{<data>}` for a post request with a valid body
   * `PUT` - test 400, responds with 'bad request' for if no `body provided` or `invalid body`
-  * `PUT` - test 204, response body like  `{<data>}` for a put request with a valid  id
+  * `PUT` - test 202, response body like  `{<data>}` for a put request with a valid  id
   * `DELETE` - test 404, responds with 'not found' for valid request made with an id that was not found
-  * `DELETE` - test 202, response for a delete request with a valid id
+  * `DELETE` - test 204, response for a delete request with a valid id
 
 
 
