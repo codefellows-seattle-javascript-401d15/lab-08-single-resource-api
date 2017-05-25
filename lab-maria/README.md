@@ -1,6 +1,5 @@
 #About
 Small Node.js App for Codefellows Coding Bootcamp.
-
 Keep track of your DeathNote's and their Death Gods with this primitive storage express app!
 
 ##Installation:
@@ -12,7 +11,6 @@ Keep track of your DeathNote's and their Death Gods with this primitive storage 
 
 1. Start the server using ``npm start`` in one terminal
 2. In separate terminal, use [HTTPie][https://httpie.org/] to perform the following CRUD operations:
-
 * POST: ``http POST localhost:3000/api/note  owner='Light Yagami' shinigami='Ryuuk' deathCount='Over 90000'``
   ⋅⋅⋅ When making a POST request, you should get the created DeathNote object as a response where you will find an id has been created for it
 * GET: ``http GET localhost:3000/api/note?id=id ``
