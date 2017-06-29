@@ -10,13 +10,13 @@ const expect = require('chai').expect;
 const debug = require('debug')('http:server');
 
 describe('note constructor module', function(){
-  this.newNote = new Note('Wat is a name', 'today');
-  it('should match the note name', done => {
-    expect(this.newNote.name).to.equal('Wat is a name');
+  this.newNote = new Note('wat-man', 'today');
+  it('should have a name of "wat-man"', done => {
+    expect(this.newNote.name).to.equal('wat-man');
     console.log(this.newNote.name);
     done();
   });
-  it('should match the date', done => {
+  it('should have a date of "today"', done => {
     expect(this.newNote.date).to.equal('today');
     console.log(this.newNote.date);
     done();
