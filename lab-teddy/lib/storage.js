@@ -32,17 +32,22 @@ exports.fetchCar = function(schema, id){
     resolve(car);
   });
 };
-// 
-// exports.updateCar = function(schema, car){
-//   debug('#updateCar');
-//   if(!schema) return Promise.reject(new Error('Schema required'));
-//   if(!car) return Promise.reject(new Error('Car Required'));
-//
-//   storage[schema] = {};
-//   storage[schema][car.id];
-//
-//   return Promise.resolve(car);
-// };
+
+exports.updateCar = function(schema, id){
+  debug('#updateCar');
+
+  return new Promise((resolve, reject) => {
+    if(!schema) return Promise.reject(new Error('Schema required'));
+    if(!id) return Promise.reject(new Error('Car Required'));
+    if(!storage[schema]) return reject(new Error('no item to update, create it first!'));
+
+    let car = schema[id];
+    storage[schema][car.id] = car;
+
+    resolve(car);
+  });
+};
+
 
 exports.removeCar = function(schema, id){
   debug('#removeCar');
