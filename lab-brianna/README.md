@@ -1,74 +1,30 @@
-# Project Title
+### Watchh Maker API
+This API generates a watch for you.
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
+### Directions for use
+1. In terminal, run
 ```
-Give examples
+node server.js
 ```
 
-### Installing
+2. After Node is running, use the following commands for POST, GET, DELETE and PUT routes.
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
+3. http POST localhost:3000/api/watch name="<name>" type="<type>"   
 ```
-Give the example
+http POST localhost:3000/api/watch name="new name" type="new_type"
 ```
 
-And repeat
-
+4. http GET localhost:3000/api/watch?id=(id)
 ```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+http GET localhost:3000/api/watch?id=121231313123123
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
+5. http DELETE localhost:3000/api/watch?id=(id)
 ```
-Give an example
+http DELETE localhost:3000/api/watch?id=121231313123123  
 ```
 
-## Deployment
+6. http PUT localhost:3000/api/watch?id=(id) name="<name>" type="<type>"
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-*
-
-## Versioning
-
-
-## Authors
-
-* **Brianna Burrows** - [brisourceful](https://github.com/brisourcefu)
-
-
-## Acknowledgments
-
-* Google
-* Stack OverFlow
+```
+http PUT localhost:3000/api/watch?id=121231313123123 name="new name" type="new_type"
